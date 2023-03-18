@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface IRickAndMortyRepository {
 
-    fun getCharacters(
-    ): Flow<ApiResponse<CharactersResponse?>>
+    fun getCharacters(): Flow<ApiResponse<CharactersResponse?>>
 
 }

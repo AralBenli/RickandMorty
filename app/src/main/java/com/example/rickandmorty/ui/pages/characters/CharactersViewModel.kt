@@ -45,7 +45,7 @@ class CharactersViewModel @Inject constructor(
                             )
                             characterStateFlow.emit(errorResponse)
                         } catch (e: Exception) {
-                            toastMessageObserver.setValue("Bağlantı sırasında bir hata oluştu.")
+                            toastMessageObserver.setValue("Connection failed.")
                         }
                         progressStateFlow.value = false
 

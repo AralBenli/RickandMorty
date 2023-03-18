@@ -6,21 +6,10 @@ data class CharactersResponse(
     @SerializedName("info")
     val info: CharInfo,
     @SerializedName("results")
-    val results: List<CharResult>
+    val results: List<CharacterItem>
 )
 
-data class CharInfo(
-    @SerializedName("count")
-    val count: Int,
-    @SerializedName("next")
-    val next: String,
-    @SerializedName("pages")
-    val pages: Int,
-    @SerializedName("prev")
-    val prev: Any
-)
-
-data class CharResult(
+data class CharacterItem(
     @SerializedName("created")
     val created: String,
     @SerializedName("episode")

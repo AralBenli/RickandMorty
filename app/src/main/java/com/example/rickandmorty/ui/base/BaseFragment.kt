@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.example.rickandmorty.R
 
@@ -39,7 +40,10 @@ abstract class BaseFragment<VB : ViewBinding> :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+        observer()
     }
+
+    open fun observer(){}
 
 
     fun showLoadingProgress() {
@@ -57,7 +61,6 @@ abstract class BaseFragment<VB : ViewBinding> :
             progressDialog.dismiss()
         }
     }
-
 
 }
 
