@@ -1,27 +1,24 @@
 package com.example.rickandmorty.ui.pages.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentSearchBinding
 import com.example.rickandmorty.ui.base.BaseFragment
+import com.example.rickandmorty.ui.pages.characters.adapter.CharacterAdapter
 import com.example.rickandmorty.ui.pages.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
-
+@AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
-    }
-
-
+    private val searchViewModel: SearchViewModel by viewModels()
+    private var searchAdapter = CharacterAdapter()
+    lateinit var text: String
     override fun getViewBinding(): FragmentSearchBinding =
         FragmentSearchBinding.inflate(layoutInflater)
 
@@ -29,5 +26,63 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         (requireActivity() as MainActivity).bottomNavigation(false)
         (requireActivity() as MainActivity).backNavigation(true)
         (requireActivity() as MainActivity).searchIcon(false)
+        (requireActivity() as MainActivity).actionBar(true)
+
+        detailNavigation()
+        setSearchView()
+
+    }
+    override fun observer() {
+        lifecycleScope.launchWhenStarted {
+            searchViewModel._progressStateFlow.collectLatest { showProgress ->
+                if (showProgress) {
+                    showLoadingProgress()
+                } else {
+                    dismissLoadingProgress()
+                }
+            }
+        }
+        lifecycleScope.launchWhenStarted {
+            searchViewModel._searchStateFlow.collectLatest {
+                it?.let {
+                    with(binding) {
+                        searchAdapter.addCharacterList(it.results)
+                        searchRecyclerView.adapter = searchAdapter
+                        searchRecyclerView.setHasFixedSize(true)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun detailNavigation() {
+        searchAdapter.clickCharacter = {
+            val bundle = Bundle()
+            it.id?.let { it -> bundle.putInt("detailId", it) }
+            findNavController().navigate(R.id.detailFragment, bundle)
+        }
+    }
+
+    private fun setSearchView() {
+        binding.searchView.isIconified = false
+        binding.searchView.isFocusable = true
+        binding.searchView.imeOptions = EditorInfo.IME_ACTION_DONE
+        binding.searchView.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                if (!query.isNullOrEmpty()) {
+                    text = query
+                    searchViewModel.fetchSearch(text)
+
+                    return true
+                }
+                return false
+            }
+        }
+        )
     }
 }

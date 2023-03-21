@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:background="@drawable/background_edge_circle"
     android:layout_height="wrap_content"
-    android:padding="5dp"
     android:layout_margin="8dp"
-    android:backgroundTint="@color/air_pink">
+    android:background="@drawable/background_edge_circle"
+    android:backgroundTint="@color/air_pink"
+    android:padding="5dp">
 
     <RelativeLayout
         android:id="@+id/buttonView"
@@ -38,15 +38,15 @@
         android:background="@drawable/carousel_txt_edges"
         android:gravity="center"
         android:padding="5dp"
-        android:textStyle="bold"
         android:textColor="@color/air_blue"
         android:textSize="13sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/buttonView"
-        tools:text="Rick Sanchez"/>
+        tools:text="Rick Sanchez" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

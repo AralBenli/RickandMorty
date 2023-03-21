@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/characters"
-        android:icon="@drawable/icon_characters"
+        android:icon="@drawable/character_selector"
         android:title="@string/characters"
         android:enabled="true" />
     <item
         android:id="@+id/locations"
-        android:icon="@drawable/icon_location_car"
+        android:icon="@drawable/location_selector"
         android:title="@string/locations"
         android:enabled="true" />
     <item
         android:id="@+id/episodes"
-        android:icon="@drawable/icon_episodes"
+        android:icon="@drawable/episode_selector"
         android:title="@string/episodes"
         android:enabled="true" />
 </menu>

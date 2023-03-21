@@ -4,24 +4,24 @@ import com.google.gson.annotations.SerializedName
 
 data class LocationResponse(
     @SerializedName("info")
-    val info: CharInfo,
+    val info: CharInfo? = CharInfo(),
     @SerializedName("results")
-    val results: List<LocationItem>
+    val results: List<LocationItem>? = emptyList()
 )
 
 data class LocationItem(
     @SerializedName("created")
-    val created: String,
+    val created: String? = "",
     @SerializedName("dimension")
-    val dimension: String,
+    val dimension: String? = "",
     @SerializedName("id")
-    val id: Int,
+    val id: Int? = 0,
     @SerializedName("name")
-    val name: String,
+    val name: String? = "",
     @SerializedName("residents")
-    val residents: List<String>,
+    val residents: List<String>?,
     @SerializedName("type")
-    val type: String,
+    val type: String? = "",
     @SerializedName("url")
-    val url: String
+    val url: String? = ""
 )

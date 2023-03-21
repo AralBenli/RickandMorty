@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/pop_up_background"
+    tools:context=".ui.pages.characters.CharactersFragment">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/popUpTopRoot"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/popUpSeasonTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.9"
+            android:padding="12dp"
+            android:text="Season 1 Episode 2"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/popUpDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="0.1"
+            android:padding="12dp"
+            android:text="December 9 '2023"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/popUpEpisodeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="12dp"
+        android:text="Lawnmower Dog"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/popUpTopRoot" />
+
+    <TextView
+        android:id="@+id/popUpStaticCharacters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:text="@string/character"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/popUpEpisodeName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/popUpEpisodeName" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_characters"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@drawable/pop_up_background"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/popUpStaticCharacters"
+        tools:listitem="@layout/episode_pop_up_characters_row_item" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+

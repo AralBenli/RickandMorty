@@ -27,15 +27,17 @@ class CharactersViewModel @Inject constructor(
     private val toastMessageObserver: MutableLiveData<String> = MutableLiveData()
 
 
-    fun fetchCharacter(){
+    fun fetchCharacter(page : Int){
         viewModelScope.launch {
-            repo.getCharacters().collectLatest {
+            repo.getCharacters(page).collectLatest {
                 when(it){
                     is ApiResponse.Progress -> {
                         progressStateFlow.value = true
                     }
                     is ApiResponse.Success -> {
                         characterStateFlow.emit(it.data)
+                        progressStateFlow.value = false
+
                     }
                     is ApiResponse.Failure -> {
                         try {

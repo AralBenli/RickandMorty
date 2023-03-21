@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/background_edge_circle"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/locationRowMainRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/planet"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/locationWorldTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_episodes"
+                android:padding="10dp"
+                android:textColor="#FFA500"
+                tools:text="World" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Type :"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/locationTypeTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_episodes"
+                android:padding="10dp"
+                android:textColor="#FFA500"
+                tools:text="Planet" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/dimension"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/locationDimensionTxt"
+                android:layout_weight="0.3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_episodes"
+                android:padding="10dp"
+                android:textColor="#FFA500"
+                tools:text="Replacement dimension" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:padding="20dp"
+            android:text="Click to see residents of planet" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

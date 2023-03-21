@@ -9,10 +9,12 @@
         android:id="@+id/episodesLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/background_edge_circle"
         android:orientation="vertical"
         android:padding="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,6 +26,7 @@
             android:background="@drawable/background_episodes">
 
             <TextView
+                android:id="@+id/episode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
@@ -35,6 +38,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
+            android:id="@+id/episodeNameTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -43,6 +47,7 @@
             tools:text="Episode Name" />
 
         <TextView
+            android:id="@+id/episodeDateTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -51,12 +56,12 @@
     </LinearLayout>
 
     <View
-        app:layout_constraintTop_toBottomOf="@+id/episodesLinearLayout"
         android:layout_width="match_parent"
-        android:visibility="invisible"
         android:layout_height="15dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/episodesLinearLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
