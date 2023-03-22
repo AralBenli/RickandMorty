@@ -13,31 +13,32 @@ import kotlinx.coroutines.flow.flowOn
 import retrofit2.http.Query
 
 class RickAndMortyRepository(
-    private val api : RickAndMortyApi
-    ): IRickAndMortyRepository {
+    private val api: RickAndMortyApi
+) : IRickAndMortyRepository {
 
     override fun getCharacters(page: Int): Flow<ApiResponse<CharactersResponse?>> =
-       result {
-           api.getCharacters(page)
-       }.flowOn(Dispatchers.IO)
+        result {
+            api.getCharacters(page)
+        }.flowOn(Dispatchers.IO)
 
     override fun getCharacterById(id: Int): Flow<ApiResponse<CharacterItem?>> =
         result {
             api.getCharacterById(id)
         }.flowOn(Dispatchers.IO)
 
-    override fun getEpisodes(page : Int): Flow<ApiResponse<EpisodeResponse?>> =
+    override fun getEpisodes(page: Int): Flow<ApiResponse<EpisodeResponse?>> =
         result {
             api.getEpisodes(page)
         }.flowOn(Dispatchers.IO)
-    override fun getLocations(page : Int): Flow<ApiResponse<LocationResponse?>> =
+
+    override fun getLocations(page: Int): Flow<ApiResponse<LocationResponse?>> =
         result {
             api.getLocations(page)
         }.flowOn(Dispatchers.IO)
 
-    override fun getSearch(text: String): Flow<ApiResponse<CharactersResponse?>> =
+    override fun getSearch(text: String, status: String): Flow<ApiResponse<CharactersResponse?>> =
         result {
-            api.getSearch(text)
+            api.getSearch(text, status)
         }.flowOn(Dispatchers.IO)
 
 

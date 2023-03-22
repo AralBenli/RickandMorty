@@ -33,5 +33,6 @@ interface RickAndMortyApi {
     @GET("character/")
     suspend fun getSearch(
         @Query("name") name :String,
+        @Query("status") status : String
         ): Response<CharactersResponse>
 }

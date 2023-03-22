@@ -13,11 +13,14 @@ interface IRickAndMortyRepository {
 
     fun getCharacterById(id: Int): Flow<ApiResponse<CharacterItem?>>
 
-    fun getEpisodes(page : Int): Flow<ApiResponse<EpisodeResponse?>>
+    fun getEpisodes(page: Int): Flow<ApiResponse<EpisodeResponse?>>
 
-    fun getLocations(page : Int): Flow<ApiResponse<LocationResponse?>>
+    fun getLocations(page: Int): Flow<ApiResponse<LocationResponse?>>
 
-    fun getSearch(text:String): Flow<ApiResponse<CharactersResponse?>>
+    fun getSearch(
+        text: String,
+        status: String
+    ): Flow<ApiResponse<CharactersResponse?>>
 
 
 }

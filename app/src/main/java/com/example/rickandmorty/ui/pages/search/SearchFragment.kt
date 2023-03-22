@@ -19,6 +19,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private val searchViewModel: SearchViewModel by viewModels()
     private var searchAdapter = CharacterAdapter()
     lateinit var text: String
+    private var status: String = "alive"
     override fun getViewBinding(): FragmentSearchBinding =
         FragmentSearchBinding.inflate(layoutInflater)
 
@@ -30,9 +31,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
         detailNavigation()
         setSearchView()
-
+        statusCheck()
     }
+
+
     override fun observer() {
+
         lifecycleScope.launchWhenStarted {
             searchViewModel._progressStateFlow.collectLatest { showProgress ->
                 if (showProgress) {
@@ -63,6 +67,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
     }
 
+
     private fun setSearchView() {
         binding.searchView.isIconified = false
         binding.searchView.isFocusable = true
@@ -76,13 +81,36 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             override fun onQueryTextChange(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
                     text = query
-                    searchViewModel.fetchSearch(text)
-
+                    searchViewModel.fetchSearch(text, status)
                     return true
                 }
                 return false
             }
         }
         )
+    }
+
+    private fun statusCheck() {
+        with(binding) {
+            statusGroup.setOnCheckedStateChangeListener { _, _ ->
+                if (statusAlive.isChecked) {
+                    status = "alive"
+                    searchView.clearFocus()
+                    searchViewModel.fetchSearch(text, status)
+                }
+                if (statusDead.isChecked) {
+                    status = "dead"
+                    searchView.clearFocus()
+                    searchViewModel.fetchSearch(text, status)
+                }
+                if (statusUnknown.isChecked) {
+                    status = "unknown"
+                    searchView.clearFocus()
+                    searchViewModel.fetchSearch(text, status)
+
+                }
+            }
+        }
+
     }
 }

@@ -29,9 +29,9 @@ class SearchViewModel @Inject constructor(
     private val toastMessageObserver: MutableLiveData<String> = MutableLiveData()
 
 
-    fun fetchSearch(text: String) {
+    fun fetchSearch(text: String ,status:String) {
         viewModelScope.launch {
-            repo.getSearch(text).collectLatest {
+            repo.getSearch(text , status).collectLatest {
                 when (it) {
                     is ApiResponse.Progress -> {
                         progressStateFlow.value = true

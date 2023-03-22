@@ -30,9 +30,54 @@
         app:searchIcon="@null"
         app:layout_constraintTop_toBottomOf="@id/searchStaticTxt" />
 
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/status_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:chipSpacingHorizontal="16dp"
+        app:singleSelection="true"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        app:selectionRequired="true"
+        android:clipToPadding="false"
+        app:checkedChip="@id/statusAlive"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/statusAlive"
+            android:checkable="true"
+            android:textColor="@color/black"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alive" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/statusDead"
+            android:checkable="true"
+            android:textColor="@color/black"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dead" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/statusUnknown"
+            android:checkable="true"
+            android:textColor="@color/black"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unknown" />
+    </com.google.android.material.chip.ChipGroup>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRecyclerView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="80dp"
         android:orientation="vertical"
@@ -41,7 +86,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView"
+        app:layout_constraintTop_toBottomOf="@id/status_group"
         app:spanCount="2"
         tools:listitem="@layout/character_row_item" />
 
