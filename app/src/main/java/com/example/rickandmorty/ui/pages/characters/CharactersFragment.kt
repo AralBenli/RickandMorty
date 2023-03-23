@@ -19,7 +19,6 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
     override fun getViewBinding(): FragmentCharactersBinding =
         FragmentCharactersBinding.inflate(layoutInflater)
 
-
     private val charactersViewModel: CharactersViewModel by viewModels()
     private var characterAdapter = CharacterAdapter()
 
@@ -44,7 +43,6 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
                }
            }
 
-
         lifecycleScope.launchWhenStarted {
             charactersViewModel._characterStateFlow.collectLatest {
                 it?.let {
@@ -58,14 +56,13 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
         }
     }
     private fun detailNavigation(){
-
         characterAdapter.clickCharacter = {
             val bundle = Bundle()
             it.id?.let { it -> bundle.putInt("detailId", it) }
             findNavController().navigate(R.id.detailFragment,bundle)
         }
     }
-    /*private fun carouselSelector()  {
+    /* private fun carouselSelector()  {
         binding.recyclerViewCarousel.adapter = carouselAdapter
         carouselAdapter.addCarouselList(scrollView)
         carouselAdapter.clickCarousel = {
@@ -93,7 +90,6 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
                 }
             }
         }
-    }*/
-
+    } */
 }
 

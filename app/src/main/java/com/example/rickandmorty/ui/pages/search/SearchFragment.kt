@@ -31,7 +31,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
         detailNavigation()
         setSearchView()
-        statusCheck()
     }
 
 
@@ -81,6 +80,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             override fun onQueryTextChange(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
                     text = query
+                    statusCheck()
                     searchViewModel.fetchSearch(text, status)
                     return true
                 }
@@ -107,10 +107,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     status = "unknown"
                     searchView.clearFocus()
                     searchViewModel.fetchSearch(text, status)
-
                 }
             }
         }
-
     }
 }

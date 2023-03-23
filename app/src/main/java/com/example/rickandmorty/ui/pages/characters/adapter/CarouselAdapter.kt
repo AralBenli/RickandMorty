@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.databinding.CarouselRowItemBinding
-import com.example.rickandmorty.models.CarouselData
+import com.example.rickandmorty.response.CarouselData
 import com.example.rickandmorty.utils.Extensions.setImage
 
 class CarouselAdapter : RecyclerView.Adapter<CarouselAdapter.CarouselViewHolder>() {

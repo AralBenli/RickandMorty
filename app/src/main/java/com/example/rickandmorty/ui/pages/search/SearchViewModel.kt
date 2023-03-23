@@ -3,8 +3,7 @@ package com.example.rickandmorty.ui.pages.search
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.rickandmorty.di.ApiResponse
-import com.example.rickandmorty.models.CharacterItem
-import com.example.rickandmorty.models.CharactersResponse
+import com.example.rickandmorty.response.CharactersResponse
 import com.example.rickandmorty.repositories.IRickAndMortyRepository
 import com.example.rickandmorty.ui.base.BaseViewModel
 import com.google.gson.Gson

@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.databinding.EpisodePopUpCharactersRowItemBinding
-import com.example.rickandmorty.models.CharacterItem
+import com.example.rickandmorty.response.CharacterItem
+import com.example.rickandmorty.response.EpisodeItem
 import com.example.rickandmorty.utils.Extensions.setImageUrl
 
 class PopUpAdapter : RecyclerView.Adapter<PopUpAdapter.PopUpViewHolder>() {
 
-    private val popUpMovieList: ArrayList<CharacterItem> = arrayListOf()
+    val popUpMovieList: ArrayList<CharacterItem> = arrayListOf()
+    var clickCharacter: ((item: CharacterItem) -> Unit)? = null
 
     inner class PopUpViewHolder(private val binding: EpisodePopUpCharactersRowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -18,6 +20,9 @@ class PopUpAdapter : RecyclerView.Adapter<PopUpAdapter.PopUpViewHolder>() {
                 popUpNameTxt.text = characterList.name
                 val url = characterList.image
                 url?.let { popUpImageView.setImageUrl(it) }
+            }
+            itemView.setOnClickListener {
+                clickCharacter?.invoke(characterList)
             }
         }
     }
@@ -40,6 +45,4 @@ class PopUpAdapter : RecyclerView.Adapter<PopUpAdapter.PopUpViewHolder>() {
         popUpMovieList.addAll(list)
         notifyDataSetChanged()
     }
-
-
 }

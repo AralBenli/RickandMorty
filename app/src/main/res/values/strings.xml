@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">RickAndMorty</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="characters">Characters</string>
+    <string name="locations">Locations</string>
+    <string name="episodes">Episodes</string>
+    <string name="origin">Origin</string>
+    <string name="species">Species</string>
+    <string name="rick_sanchez">Rick Sanchez</string>
+    <string name="character">CHARACTERS</string>
+    <string name="dimension">Dimension :</string>
+    <string name="planet_type">Planet Type :</string>
+    <string name="planet">Planet :</string>
+    <string name="type">Type</string>
+    <string name="alive">Alive</string>
+    <string name="dead">Dead</string>
+    <string name="unknown">Unknown</string>
+    <string name="Residents">Residents of this Planet...</string>
+
+</resources>

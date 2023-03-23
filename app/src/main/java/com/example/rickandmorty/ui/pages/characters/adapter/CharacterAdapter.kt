@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.databinding.CharacterRowItemBinding
-import com.example.rickandmorty.models.CharacterItem
+import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.utils.Extensions.setImageUrl
 
 class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>() {

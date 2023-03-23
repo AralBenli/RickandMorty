@@ -19,34 +19,19 @@
         android:layout_height="wrap_content"
         android:text="EPISODES"/>
 
-    <Spinner
-        android:id="@+id/episodeSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:contentDescription="@string/appbar_scrolling_view_behavior"
-        android:gravity="center|end"
-        android:minHeight="48dp"
-        android:padding="10dp"
-        tools:listitem="@layout/spinner_row_item"
-        android:textColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/episodesStaticTxt" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/episodeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="80dp"
         android:layout_marginBottom="80dp"
-        android:padding="5dp"
-        android:layout_marginTop="20dp"
         android:orientation="vertical"
+        android:padding="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/episodeSpinner"
         tools:itemCount="3"
         tools:listitem="@layout/episodes_row_item" />
 

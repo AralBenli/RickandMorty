@@ -3,10 +3,15 @@ package com.example.rickandmorty.ui.pages.detail
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.rickandmorty.R
+import com.example.rickandmorty.constants.Constants
 import com.example.rickandmorty.databinding.FragmentDetailBinding
 import com.example.rickandmorty.ui.base.BaseFragment
 import com.example.rickandmorty.ui.pages.episodes.EpisodeViewModel
@@ -23,7 +28,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         FragmentDetailBinding.inflate(layoutInflater)
 
     private val detailViewModel: DetailViewModel by viewModels()
-    private val detailEpisodeViewModel: EpisodeViewModel by viewModels()
     private var detailEpisodeAdapter = EpisodeAdapter()
     override fun initViews() {
         (requireActivity() as MainActivity).bottomNavigation(false)
@@ -31,9 +35,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         (requireActivity() as MainActivity).searchIcon(false)
 
         val getId = requireArguments().getInt("detailId")
-
         detailViewModel.fetchCharacterById(getId)
-        detailEpisodeViewModel.fetchEpisodes(1)
 
     }
 
@@ -58,6 +60,12 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
                         detailCharStatusTxt.text = it.status
                         detailCharSpeciesTxt.text = it.species
                         detailCharOriginTxt.text = it.origin?.name
+                        val episodeRange = it.episode?.map {
+                            it.substring(startIndex = it.lastIndexOf("/") + 1)
+                        }
+                        detailViewModel.fetchEpisodesFromCharacter(episodeRange.toString())
+                        Log.d("msg",episodeRange.toString())
+
                         when (detailCharStatusTxt.text) {
                             "Alive" -> {
                                 detailStatusIcon.setImageResource(R.drawable.online)
@@ -80,14 +88,13 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
                                 detailGenderIcon.setImageResource(R.drawable.unknown_icon)
                             }
                         }
-
                     }
                 }
             }
         }
 
         lifecycleScope.launchWhenStarted {
-            detailEpisodeViewModel._progressStateFlow.collectLatest { showProgress ->
+            detailViewModel._progressStateFlow.collectLatest { showProgress ->
                 if (showProgress) {
                     showLoadingProgress()
                 } else {
@@ -95,11 +102,12 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
                 }
             }
         }
+
         lifecycleScope.launchWhenStarted {
-            detailEpisodeViewModel._episodeStateFlow.collectLatest {
+            detailViewModel._characterEpisodesStateFlow.collectLatest {
                 it?.let {
                     with(binding) {
-                        it.results?.let { it -> detailEpisodeAdapter.addEpisodeList(it) }
+                        it.let { it -> detailEpisodeAdapter.addEpisodeList(it) }
                         detailCharEpisodesRecyclerView.adapter = detailEpisodeAdapter
                         detailCharEpisodesRecyclerView.setHasFixedSize(true)
                     }
@@ -110,28 +118,10 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
 
     private fun popUpWindows() {
         detailEpisodeAdapter.clickEpisode = {
-
-            val acceptBinding = layoutInflater.inflate(R.layout.fragment_pop_up, null)
-            val characterDialog = Dialog(requireContext())
-            characterDialog.setContentView(acceptBinding)
-            characterDialog.setCanceledOnTouchOutside(true)
-            characterDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            characterDialog.window?.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            characterDialog.window?.setDimAmount(0.85f)
-            characterDialog.show()
+            val bundle = bundleOf("season" to it.episode , "id" to it.id)
+            bundle.putInt("type",Constants.typeEpisode)
+            findNavController().navigate(R.id.detailtoBottom , bundle)
         }
     }
 }
 
-/*
-detailEpisodeAdapter.addEpisodeList(it.results)
-val imageView = view?.findViewById<ImageView>(R.id.popUpImageView)
-val url = it.results[0].url
-imageView?.setImageUrl(url)
-val date = view?.findViewById<TextView>(R.id.popUpDate)
-date?.text = it.results[0].episode
-val realiseDate = view?.findViewById<TextView>(R.id.popUpSeasonTxt)
-val name = view?.findViewById<TextView>(R.id.popUpNameTxt)*/

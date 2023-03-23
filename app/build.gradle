@@ -1,0 +1,90 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.android'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+}
+android {
+    namespace 'com.example.rickandmorty'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.rickandmorty"
+        minSdk 28
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    kapt {
+        correctErrorTypes = true
+    }
+    buildFeatures {
+        dataBinding = true
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.core:core-ktx:1.9.0'
+
+
+    // Navigation
+    def nav_version = "2.5.3"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Hilt android
+    implementation 'com.google.dagger:hilt-android:2.43.2'
+    kapt 'com.google.dagger:hilt-compiler:2.43.2'
+    kapt 'com.google.dagger:dagger-compiler:2.43.2'
+
+    // Retrofit
+    api "com.squareup.retrofit2:retrofit:2.9.0"
+    api "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11"
+    implementation "com.google.code.gson:gson:2.9.0"
+    api "com.squareup.retrofit2:converter-gson:2.9.0"
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    implementation('com.github.bumptech.glide:okhttp3-integration:4.14.2') {
+        exclude group: 'glide-parent'
+    }
+
+
+    //Paging
+    def paging_version = "3.1.1"
+    implementation "androidx.paging:paging-common-ktx:$paging_version" // For Kotlin use paging-runtime-ktx
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version" // For Kotlin use paging-runtime-ktx
+
+
+
+}
+
+kapt {
+    correctErrorTypes true
+}

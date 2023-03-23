@@ -1,4 +1,4 @@
-package com.example.rickandmorty.models
+package com.example.rickandmorty.response
 
 import com.google.gson.annotations.SerializedName
 

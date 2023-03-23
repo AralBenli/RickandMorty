@@ -1,7 +1,10 @@
-package com.example.rickandmorty.models
+package com.example.rickandmorty.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class CharInfo(
     @SerializedName("pages")
     val pages: Int? = 0,
@@ -10,5 +13,5 @@ data class CharInfo(
     @SerializedName("next")
     val next: String? = null,
     @SerializedName("prev")
-    val prev: Any? = null
-)
+    val prev: String? = null
+) : Parcelable

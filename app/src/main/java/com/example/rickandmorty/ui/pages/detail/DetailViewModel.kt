@@ -3,9 +3,10 @@ package com.example.rickandmorty.ui.pages.detail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.rickandmorty.di.ApiResponse
-import com.example.rickandmorty.models.CharacterItem
-import com.example.rickandmorty.models.CharactersResponse
+import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.repositories.IRickAndMortyRepository
+import com.example.rickandmorty.response.EpisodeItem
+import com.example.rickandmorty.response.EpisodeResponse
 import com.example.rickandmorty.ui.base.BaseViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,11 +28,10 @@ class DetailViewModel @Inject constructor(
 
     private val toastMessageObserver: MutableLiveData<String> = MutableLiveData()
 
-
-    fun fetchCharacterById(id : Int){
+    fun fetchCharacterById(id: Int) {
         viewModelScope.launch {
             repo.getCharacterById(id).collectLatest {
-                when(it){
+                when (it) {
                     is ApiResponse.Progress -> {
                         progressStateFlow.value = true
                     }
@@ -50,6 +50,35 @@ class DetailViewModel @Inject constructor(
                         } catch (e: Exception) {
                             toastMessageObserver.setValue("Connection failed.")
                         }
+                        progressStateFlow.value = false
+                    }
+                }
+            }
+        }
+    }
+
+    private val characterEpisodesStateFlow: MutableSharedFlow<List<EpisodeItem>?> =
+        MutableSharedFlow()
+    val _characterEpisodesStateFlow : SharedFlow<List<EpisodeItem>?> =
+        characterEpisodesStateFlow
+
+
+    fun fetchEpisodesFromCharacter(episodeList: String) {
+        viewModelScope.launch {
+            repo.getCharacterEpisodes(episodeList).collectLatest {
+                when (it) {
+                    is ApiResponse.Progress -> {
+                        progressStateFlow.value = true
+                    }
+                    is ApiResponse.Success -> {
+                        characterEpisodesStateFlow.emit(it.data)
+                        progressStateFlow.value = false
+
+                    }
+                    is ApiResponse.Failure -> {
+
+                        toastMessageObserver.value = "Connection failed."
+
                         progressStateFlow.value = false
 
                     }

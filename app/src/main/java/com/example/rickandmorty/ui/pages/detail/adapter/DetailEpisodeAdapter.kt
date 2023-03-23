@@ -4,8 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.databinding.EpisodesRowItemBinding
-import com.example.rickandmorty.models.CharacterItem
-import com.example.rickandmorty.models.EpisodeItem
+import com.example.rickandmorty.response.EpisodeItem
 
 
 class DetailEpisodeAdapter : RecyclerView.Adapter<DetailEpisodeAdapter.DetailViewHolder>(){

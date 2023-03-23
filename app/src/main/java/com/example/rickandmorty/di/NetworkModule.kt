@@ -1,6 +1,8 @@
 package com.example.rickandmorty.di
 
+
 import com.example.rickandmorty.constants.Constants
+import com.example.rickandmorty.constants.Constants.BASE_URL
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -11,9 +13,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
+
+
+    @Provides
+    fun proveBaseUrl() = Constants.BASE_URL
+
+
 
     @Singleton
     @Provides
@@ -23,7 +32,7 @@ class NetworkModule {
             .setLenient()
             .create()
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }

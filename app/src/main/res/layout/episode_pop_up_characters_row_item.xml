@@ -6,15 +6,15 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:background="@drawable/background_pop_up"
-
     android:padding="5dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/popUpImageView"
         android:padding="5dp"
-        android:layout_width="255dp"
-        android:layout_height="255dp"
+        android:layout_width="215dp"
+        android:layout_height="215dp"
         android:scaleType="fitCenter"
+        app:shapeAppearanceOverlay="@style/roundedCorners2x"
         tools:src="@drawable/rick_sanchez"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,11 +27,15 @@
         android:layout_height="match_parent"
         android:background="@drawable/carousel_txt_edges"
         android:gravity="center"
-        android:paddingTop="4dp"
-        android:layout_marginStart="4dp"
+        android:paddingTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
         android:textColor="@color/air_blue"
         android:textSize="12sp"
         android:textStyle="bold"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

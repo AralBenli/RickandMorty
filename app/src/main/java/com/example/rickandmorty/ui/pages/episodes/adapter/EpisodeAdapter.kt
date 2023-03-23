@@ -1,30 +1,36 @@
 package com.example.rickandmorty.ui.pages.episodes.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.EpisodesRowItemBinding
-import com.example.rickandmorty.models.EpisodeItem
+import com.example.rickandmorty.response.EpisodeItem
 
 
 class EpisodeAdapter : RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() {
 
-    private val episodeList: ArrayList<EpisodeItem> = arrayListOf()
+    val episodeList: ArrayList<EpisodeItem> = arrayListOf()
     var clickEpisode: ((item: EpisodeItem) -> Unit)? = null
 
 
     inner class EpisodeViewHolder(private val binding: EpisodesRowItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root){
         fun bind(episodeList: EpisodeItem) {
             with(binding) {
                 episodeNameTxt.text = episodeList.name
                 episodeDateTxt.text = episodeList.airDate
                 episode.text = episodeList.episode
+
             }
             itemView.setOnClickListener {
                 clickEpisode?.invoke(episodeList)
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodeViewHolder {

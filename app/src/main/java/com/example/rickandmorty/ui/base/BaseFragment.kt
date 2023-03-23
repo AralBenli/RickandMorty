@@ -16,6 +16,7 @@ import com.example.rickandmorty.R
 abstract class BaseFragment<VB : ViewBinding> :
     Fragment() {
 
+
     private lateinit var progressDialog: Dialog
     lateinit var binding: VB
     var savedInstanceView: View? = null

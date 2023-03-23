@@ -4,18 +4,21 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.R
+import com.example.rickandmorty.constants.Constants
 import com.example.rickandmorty.databinding.FragmentLocationBinding
 import com.example.rickandmorty.ui.base.BaseFragment
-import com.example.rickandmorty.ui.pages.episodes.adapter.EpisodeAdapter
 import com.example.rickandmorty.ui.pages.locations.adapter.LocationAdapter
 import com.example.rickandmorty.ui.pages.main.MainActivity
+import com.example.rickandmorty.ui.pages.popup.adapter.PopUpAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -24,13 +27,9 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
 
     private val locationViewModel: LocationViewModel by viewModels()
     private var locationAdapter = LocationAdapter()
-
+    private var characterList : List<String>? = emptyList()
 
     override fun getViewBinding(): FragmentLocationBinding = FragmentLocationBinding.inflate(layoutInflater)
-
-
-
-
 
     override fun initViews() {
         (requireActivity() as MainActivity).backNavigation(false)
@@ -55,11 +54,15 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
         }
 
         lifecycleScope.launchWhenStarted {
-            locationViewModel._locationStateFlow.collectLatest {
-                it.let {
+            locationViewModel._locationStateFlow.collectLatest { locationResponse ->
+                locationResponse.let {
                     with(binding){
                         if (it != null){
-                            it.results?.let { it -> locationAdapter.addLocationList(it) }
+                            it.results.let {
+                                if (it != null) {
+                                    locationAdapter.addLocationList(it)
+                                }
+                            }
                             locationRecyclerView.adapter = locationAdapter
                             locationRecyclerView.setHasFixedSize(true)
                         }
@@ -68,24 +71,11 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
             }
         }
 
-
         locationAdapter.clickLocation = {
+            val bundle = bundleOf("season" to it.name , "id" to it.id )
+            bundle.putInt("type", Constants.typeLocation)
+            findNavController().navigate(R.id.locationToBottom , bundle)
 
-            val acceptBinding = layoutInflater.inflate(R.layout.fragment_pop_up, null)
-            val characterDialog = Dialog(requireContext())
-            characterDialog.setContentView(acceptBinding)
-            characterDialog.setCanceledOnTouchOutside(true)
-            characterDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            characterDialog.window?.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            characterDialog.window?.setDimAmount(0.85f)
-            characterDialog.show()
         }
-
-        val staticTxt = view?.findViewById<TextView>(R.id.popUpStaticCharacters)
-        staticTxt?.text = "RESIDENTS"
-
     }
 }
