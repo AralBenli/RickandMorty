@@ -27,6 +27,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/search_view_background"
         app:searchHintIcon="@null"
+        android:outlineAmbientShadowColor="@color/dark_gray"
         app:searchIcon="@null"
         app:layout_constraintTop_toBottomOf="@id/searchStaticTxt" />
 

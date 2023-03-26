@@ -15,4 +15,10 @@
         android:icon="@drawable/episode_selector"
         android:title="@string/episodes"
         android:enabled="true" />
+
+    <item
+        android:id="@+id/menu"
+        android:icon="@drawable/menu_selector"
+        android:title="@string/menu"
+        android:enabled="true" />
 </menu>

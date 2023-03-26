@@ -15,6 +15,10 @@
     <color name="air_blue_transparent">#99A5DEE5</color>
     <color name="pale_gray">#f5f9fe</color>
     <color name="red">#FF0000</color>
+    <color name="orange">#FFA500</color>
+    <color name="underline">#BDB8B8</color>
+    <color name="dark_gray">#404040</color>
+
 
 
 </resources>

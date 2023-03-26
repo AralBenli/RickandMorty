@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_episodes"
                 android:padding="10dp"
-                android:textColor="#FFA500"
+                android:textColor="@color/air_brown"
                 tools:text="World" />
 
         </LinearLayout>
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_episodes"
                 android:padding="10dp"
-                android:textColor="#FFA500"
+                android:textColor="@color/air_brown"
                 tools:text="Planet" />
 
         </LinearLayout>
@@ -85,18 +85,21 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_episodes"
                 android:padding="10dp"
-                android:textColor="#FFA500"
+                android:textColor="@color/air_brown"
                 tools:text="Replacement dimension" />
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/locationClickToSeeStaticTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="@color/transparent_black"
+            android:backgroundTint="@color/transparent_black"
             android:textAlignment="center"
             android:padding="20dp"
-            android:text="Click to see residents of planet" />
+            tools:text="Click to see residents of planet" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

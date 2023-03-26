@@ -1,12 +1,7 @@
 package com.example.rickandmorty.ui.pages.splash
 
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentSplashBinding
@@ -28,8 +23,10 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     }
 
     private fun splash(){
-        Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            findNavController().navigate(R.id.toHome)
+        Handler(Looper.getMainLooper()).postDelayed({
+            view?.post {
+                findNavController().navigate(R.id.toHome)
+            }
         }, 3000)
     }
 }

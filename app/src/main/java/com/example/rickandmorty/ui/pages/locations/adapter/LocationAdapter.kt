@@ -1,9 +1,13 @@
 package com.example.rickandmorty.ui.pages.locations.adapter
 
 
+import android.graphics.Color
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.LocationRowItemBinding
 import com.example.rickandmorty.response.LocationItem
 
@@ -20,6 +24,10 @@ class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>
                 locationTypeTxt.text = locationList.type
                 locationDimensionTxt.text = locationList.dimension
                 locationWorldTxt.text = locationList.name
+                val staticText = SpannableString("Click to see residents of planet")
+                staticText.setSpan(UnderlineSpan(), 0, staticText.length, 0)
+                locationClickToSeeStaticTxt.text = staticText
+
             }
             itemView.setOnClickListener {
                 clickLocation?.invoke(locationList)

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/background_edge_circle"
+        android:background="@drawable/background_pop_up"
         android:orientation="vertical"
         android:padding="10dp"
         android:layout_marginLeft="10dp"
@@ -37,22 +37,41 @@
                 tools:text="S.1 E.1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/episodeNameTxt"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            tools:text="Episode Name" />
+            android:background="@drawable/background_episodes">
 
-        <TextView
-            android:id="@+id/episodeDateTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="14sp"
-            tools:text="December 16 , 2013" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/episodeNameTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="Episode Name" />
+
+                <TextView
+                    android:id="@+id/episodeDateTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textSize="14sp"
+                    tools:text="December 16 , 2013" />
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
     <View

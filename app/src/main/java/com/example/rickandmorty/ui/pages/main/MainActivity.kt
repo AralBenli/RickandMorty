@@ -1,13 +1,11 @@
 package com.example.rickandmorty.ui.pages.main
 
-import android.content.res.ColorStateList
-import android.graphics.Color
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -19,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity() : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
@@ -27,21 +25,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        bottomNavigationView = findViewById(R.id.navigationBottom)
-        bottomNavigationView = binding.navigationBottom
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        binding.navigationBottom.setupWithNavController(navHostFragment.navController)
-        bottomNavigationView.itemIconTintList = null
+        initViews()
 
+        val sharedPreferences = applicationContext.getSharedPreferences("nightMode", MODE_PRIVATE)
+
+        if (sharedPreferences.getBoolean("nightMode" , true)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
 
 
         binding.searchIcon.setOnClickListener {
@@ -51,10 +51,7 @@ class MainActivity : AppCompatActivity() {
         binding.backIcon.setOnClickListener {
             navHostFragment.findNavController().popBackStack()
         }
-
-        initViews()
     }
-
 
     fun bottomNavigation(visibility: Boolean) {
         if (visibility) {
@@ -81,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun actionBar(visibility: Boolean){
+    fun actionBar(visibility: Boolean) {
         if (visibility) {
             binding.customActionBar.visibility = View.VISIBLE
         } else {
@@ -90,6 +87,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        bottomNavigationView = binding.navigationBottom
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        binding.navigationBottom.setupWithNavController(navHostFragment.navController)
+        bottomNavigationView.itemIconTintList = null
+        binding.navigation.itemIconTintList = null
 
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -103,8 +106,37 @@ class MainActivity : AppCompatActivity() {
                 R.id.episodes -> {
                     navHostFragment.findNavController().navigate(R.id.episodesFragment)
                 }
+                R.id.menu -> {
+                    binding.drawerLayout.openDrawer(GravityCompat.START)
+                }
             }
             true
+        }
+
+        binding.navigation.setNavigationItemSelectedListener { drawerItem ->
+
+            val sharedPreferences = applicationContext.getSharedPreferences("nightMode", MODE_PRIVATE)
+            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+            when (drawerItem.itemId) {
+                R.id.darkTheme -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    editor.putBoolean("nightMode",true)
+                    editor.apply()
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                R.id.lightTheme -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    editor.putBoolean("nightMode",false)
+                    editor.apply()
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                R.id.changeLanguage -> {
+
+                }
+                else -> {}
+            }
+            false
         }
     }
 }

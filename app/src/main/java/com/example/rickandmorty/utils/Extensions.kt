@@ -1,9 +1,11 @@
 package com.example.rickandmorty.utils
 
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.RequestOptions
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -24,8 +26,6 @@ object Extensions {
             .apply(RequestOptions().override(1440, 1080))
             .into(this)
     }
-
-
 }
 
 fun getCurrentDayAndTime(date:String) : String {
@@ -38,3 +38,16 @@ fun getCurrentDayAndTime(date:String) : String {
     val dateToWeekNameFormat: DateFormat = SimpleDateFormat("MM-dd-yyyy", Locale("tr"))
     return dateToWeekNameFormat.format(date)
 }
+
+fun Fragment.findNavControllerSafely(): NavController? {
+    return if (isAdded) {
+        findNavController()
+    } else {
+        null
+    }
+}
+
+fun NavController.lifeCycleNavigate(lifecycle : LifecycleCoroutineScope, resId :Int) =
+    lifecycle.launchWhenResumed {
+        navigate(resId)
+    }

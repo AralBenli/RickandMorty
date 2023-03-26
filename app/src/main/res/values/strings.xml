@@ -15,6 +15,15 @@
     <string name="alive">Alive</string>
     <string name="dead">Dead</string>
     <string name="unknown">Unknown</string>
-    <string name="Residents">Residents of this Planet...</string>
-
+    <string name="Residents">Residents of this Planet…</string>
+    <string name="dimensions_static_text">Dimension   -></string>
+    <string name="nobody_lives_text">Nobody lives here…</string>
+    <string name="menu">Menu</string>
+    <string name="change_theme">Change Theme</string>
+    <string name="settings">Settings</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="change_language">Change Language</string>
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
 </resources>

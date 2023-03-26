@@ -1,6 +1,8 @@
 package com.example.rickandmorty.ui.pages.episodes.adapter
 
 import android.graphics.Color
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -21,9 +23,11 @@ class EpisodeAdapter : RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() 
         RecyclerView.ViewHolder(binding.root){
         fun bind(episodeList: EpisodeItem) {
             with(binding) {
-                episodeNameTxt.text = episodeList.name
+                val episodeName = SpannableString( episodeList.name)
+                episodeName.setSpan(UnderlineSpan(), 0, episodeName.length, 0)
                 episodeDateTxt.text = episodeList.airDate
                 episode.text = episodeList.episode
+                episodeNameTxt.text = episodeName
 
             }
             itemView.setOnClickListener {

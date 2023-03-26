@@ -28,25 +28,33 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
         (requireActivity() as MainActivity).searchIcon(true)
         (requireActivity() as MainActivity).actionBar(true)
 
+/*
+        binding.themeIcon.setButtonDrawable(R.drawable.icon_dark)
+*/
+
         charactersViewModel.fetchCharacter(1)
         detailNavigation()
+/*
+        theme()
+*/
+
     }
 
     override fun observer() {
-           lifecycleScope.launchWhenStarted {
-               charactersViewModel._progressStateFlow.collectLatest { showProgress ->
-                   if (showProgress) {
-                       showLoadingProgress()
-                   } else {
-                       dismissLoadingProgress()
-                   }
-               }
-           }
+        lifecycleScope.launchWhenStarted {
+            charactersViewModel._progressStateFlow.collectLatest { showProgress ->
+                if (showProgress) {
+                    showLoadingProgress()
+                } else {
+                    dismissLoadingProgress()
+                }
+            }
+        }
 
         lifecycleScope.launchWhenStarted {
             charactersViewModel._characterStateFlow.collectLatest {
                 it?.let {
-                    with(binding){
+                    with(binding) {
                         characterAdapter.addCharacterList(it.results)
                         recyclerViewCharacters.adapter = characterAdapter
                         recyclerViewCharacters.setHasFixedSize(true)
@@ -55,41 +63,63 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
             }
         }
     }
-    private fun detailNavigation(){
+
+    private fun detailNavigation() {
         characterAdapter.clickCharacter = {
             val bundle = Bundle()
-            it.id?.let { it -> bundle.putInt("detailId", it) }
-            findNavController().navigate(R.id.detailFragment,bundle)
+            it.id?.let { its -> bundle.putInt("detailId", its) }
+            findNavController().navigate(R.id.detailFragment, bundle)
         }
     }
-    /* private fun carouselSelector()  {
-        binding.recyclerViewCarousel.adapter = carouselAdapter
-        carouselAdapter.addCarouselList(scrollView)
-        carouselAdapter.clickCarousel = {
-            val bundle = Bundle()
-            when (it) {
-                1 -> {
-                    bundle.putInt("id",1)
-                    findNavController().navigate(R.id.detailFragment, bundle)
-                }
-                2 -> {
-                    bundle.putInt("id",2)
-                    findNavController().navigate(R.id.detailFragment, bundle)
-                }
-                3 -> {
-                    bundle.putInt("id",3)
-                    findNavController().navigate(R.id.detailFragment, bundle)
-                }
-                4 -> {
-                    bundle.putInt("id",4)
-                    findNavController().navigate(R.id.detailFragment, bundle)
-                }
-                5 -> {
-                    bundle.putInt("id",5)
-                    findNavController().navigate(R.id.detailFragment, bundle)
+}
+
+/*
+    private fun theme() {
+        with(binding) {
+            themeIcon.setOnCheckedChangeListener { button, isChecked ->
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    button.setButtonDrawable(R.drawable.icon_light)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    button.setButtonDrawable(R.drawable.icon_dark)
+
                 }
             }
         }
-    } */
-}
+    }
+*/
+
+
+
+/* private fun carouselSelector()  {
+    binding.recyclerViewCarousel.adapter = carouselAdapter
+    carouselAdapter.addCarouselList(scrollView)
+    carouselAdapter.clickCarousel = {
+        val bundle = Bundle()
+        when (it) {
+            1 -> {
+                bundle.putInt("id",1)
+                findNavController().navigate(R.id.detailFragment, bundle)
+            }
+            2 -> {
+                bundle.putInt("id",2)
+                findNavController().navigate(R.id.detailFragment, bundle)
+            }
+            3 -> {
+                bundle.putInt("id",3)
+                findNavController().navigate(R.id.detailFragment, bundle)
+            }
+            4 -> {
+                bundle.putInt("id",4)
+                findNavController().navigate(R.id.detailFragment, bundle)
+            }
+            5 -> {
+                bundle.putInt("id",5)
+                findNavController().navigate(R.id.detailFragment, bundle)
+            }
+        }
+    }
+} */
+
 

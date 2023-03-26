@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.rickandmorty.di.ApiResponse
 import com.example.rickandmorty.repositories.IRickAndMortyRepository
+import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.response.EpisodeItem
 import com.example.rickandmorty.response.LocationItem
 import com.example.rickandmorty.ui.base.BaseViewModel
@@ -88,6 +89,43 @@ class BottomSheetViewModel @Inject constructor(
                             toastMessageObserver.setValue("Connection failed.")
                         }
                         progressStateFlow.value = false
+                    }
+                }
+            }
+        }
+    }
+
+    private val charactersFromLocationStateFlow : MutableSharedFlow<List<CharacterItem>?> =
+        MutableSharedFlow()
+
+    val _characterFromLocationStateFlow : SharedFlow<List<CharacterItem>?> = charactersFromLocationStateFlow
+
+
+
+    fun fetchGetMoreCharactersThanOne(characterList: List<String>){
+        viewModelScope.launch{
+            repo.getMoreCharactersThanOne(characterList).collectLatest {
+                when (it) {
+                    is ApiResponse.Progress -> {
+                        progressStateFlow.value = true
+                    }
+                    is ApiResponse.Success -> {
+                        charactersFromLocationStateFlow.emit(it.data)
+                        progressStateFlow.value = false
+
+                    }
+                    is ApiResponse.Failure -> {
+                        try {
+                            val errorResponse = Gson().fromJson(
+                                it.data!!.errorBody()!!.string(),
+                                CharacterItem::class.java
+                            )
+                            charactersFromLocationStateFlow.emit(listOf(errorResponse))
+                        } catch (e: Exception) {
+                            toastMessageObserver.setValue("Connection failed.")
+                        }
+                        progressStateFlow.value = false
+
                     }
                 }
             }

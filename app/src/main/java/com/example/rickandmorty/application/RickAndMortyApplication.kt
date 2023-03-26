@@ -5,4 +5,13 @@ import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class RickAndMortyApplication : Application()
+class RickAndMortyApplication : Application(){
+
+    override fun onCreate() {
+        super.onCreate()
+
+    }
+
+}
+
+

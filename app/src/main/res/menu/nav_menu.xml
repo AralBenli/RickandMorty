@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<item android:title="@string/change_theme">
+    <menu>
+        <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/lightTheme"
+                android:icon="@drawable/icon_light"
+                android:title="@string/light_theme" />
+            <item
+                android:id="@+id/darkTheme"
+                android:icon="@drawable/icon_dark"
+                android:title="@string/dark_theme" />
+        </group>
+    </menu>
+</item>
+
+    <item android:title="@string/change_language">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/changeLanguage"
+                    android:icon="@drawable/icon_language"
+                    android:title="@string/change_language" />
+            </group>
+        </menu>
+    </item>
+</menu>

@@ -12,10 +12,38 @@ interface RickAndMortyApi {
         @Query("page") pageIndex: Int
     ): Response<CharactersResponse>
 
+    @GET("location/")
+    suspend fun getLocations(
+        @Query("page") pageIndex: Int
+    ): Response<LocationResponse>
+
+
+    @GET("episode/")
+    suspend fun getEpisodes(
+        @Query("page") pageIndex: Int
+    ): Response<EpisodeResponse>
+
+
     @GET("character/{id}")
     suspend fun getCharacterById(
         @Path("id") id: Int
     ): Response<CharacterItem>
+
+    @GET("episode/{id}")
+    suspend fun getEpisodeById(
+        @Path("id") id: Int
+    ): Response<EpisodeItem>
+
+    @GET("location/{id}")
+    suspend fun getLocationById(
+        @Path("id") id: Int
+    ): Response<LocationItem>
+
+    @GET("character/")
+    suspend fun getSearch(
+        @Query("name") name: String,
+        @Query("status") status: String
+    ): Response<CharactersResponse>
 
     @GET("episode/{episodes}")
     suspend fun getCharacterEpisodes(
@@ -26,35 +54,5 @@ interface RickAndMortyApi {
     suspend fun getMoreCharactersThanOne(
         @Path("list") characterList: List<String>
     ): Response<List<CharacterItem>>
-
-
-    @GET("episode")
-    suspend fun getEpisodes(
-        @Query("page") pageIndex: Int
-    ): Response<EpisodeResponse>
-
-
-    @GET("episode/{id}")
-    suspend fun getEpisodeById(
-        @Path("id") id: Int
-    ): Response<EpisodeItem>
-
-    @GET("location")
-    suspend fun getLocations(
-        @Query("page") pageIndex: Int
-    ): Response<LocationResponse>
-
-    @GET("location/{id}")
-    suspend fun getLocationById(
-        @Path("id") id: Int
-    ): Response<LocationItem>
-
-
-    @GET("character/")
-    suspend fun getSearch(
-        @Query("name") name: String,
-        @Query("status") status: String
-    ): Response<CharactersResponse>
-
 
 }

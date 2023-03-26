@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="400dp"
-    style="@style/AppBottomSheetDialogTheme"
-    android:background="@drawable/pop_up_background"
     tools:context=".ui.pages.characters.CharactersFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -66,11 +64,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/popUpEpisodeName" />
 
+
+    <TextView
+        android:id="@+id/noOneIsHere"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:visibility="gone"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="80dp"
+        android:gravity="center"
+        android:textColor="@color/air_blue"
+        app:layout_constraintTop_toBottomOf="@id/popUpStaticCharacters"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_characters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/pop_up_background"
         android:orientation="horizontal"
         android:padding="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

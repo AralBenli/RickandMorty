@@ -6,25 +6,25 @@ import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 import java.lang.Error
 
-fun<T> result(call: suspend() -> Response<T>) : Flow<ApiResponse<T?>> = flow {
-    emit(ApiResponse.loading(true))
+fun <T> result(call: suspend () -> Response<T>): Flow<ApiResponse<T?>> = flow {
 
+    emit(ApiResponse.loading(true))
     try {
         val c = call()
         c.let {
-            if (c.isSuccessful){
+            if (c.isSuccessful) {
+
                 emit(ApiResponse.success(c.body()))
-            }else{
+            } else {
                 c.errorBody()?.let {
                     it.close()
-                    emit(ApiResponse.failure(Error(it.toString()), Response.error(400,c.errorBody())))
 
+                        emit(ApiResponse.failure(Error(it.toString()), Response.error(400, c.errorBody()!!)))
                 }
-
             }
         }
-    }catch(t:Throwable){
+    } catch (t: Throwable) {
         t.printStackTrace()
-        emit(ApiResponse.failure(t,null))
+        emit(ApiResponse.failure(t, null))
     }
 }

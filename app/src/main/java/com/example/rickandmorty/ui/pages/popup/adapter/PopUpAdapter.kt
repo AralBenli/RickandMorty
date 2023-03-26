@@ -10,7 +10,7 @@ import com.example.rickandmorty.utils.Extensions.setImageUrl
 
 class PopUpAdapter : RecyclerView.Adapter<PopUpAdapter.PopUpViewHolder>() {
 
-    val popUpMovieList: ArrayList<CharacterItem> = arrayListOf()
+    private val popUpMovieList: ArrayList<CharacterItem> = arrayListOf()
     var clickCharacter: ((item: CharacterItem) -> Unit)? = null
 
     inner class PopUpViewHolder(private val binding: EpisodePopUpCharactersRowItemBinding) :

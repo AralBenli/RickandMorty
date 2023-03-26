@@ -5,22 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.pages.characters.CharactersFragment">
+<LinearLayout
+    android:id="@+id/characterTopRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/transparent_black"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
     <TextView
         android:id="@+id/characterStaticTxt"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/transparent_black"
-        android:padding="12dp"
+        android:padding="15dp"
         android:text="CHARACTERS"
+        android:layout_weight="1"
         android:textColor="@color/air_blue"
         android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
+</LinearLayout>
+<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_characters"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -31,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/characterStaticTxt"
+        app:layout_constraintTop_toBottomOf="@id/characterTopRoot"
         app:spanCount="2"
         tools:itemCount="6"
         tools:listitem="@layout/character_row_item" />
