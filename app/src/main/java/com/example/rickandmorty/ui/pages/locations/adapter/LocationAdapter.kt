@@ -9,14 +9,10 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.databinding.LocationRowItemBinding
-import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.response.LocationItem
 
 class LocationAdapter : PagingDataAdapter<LocationItem, LocationAdapter.LocationViewHolder>(LocationDiffUtil) {
-
-    private val locationList: ArrayList<LocationItem> = arrayListOf()
     var clickLocation: ((item: LocationItem) -> Unit)? = null
-
 
     inner class LocationViewHolder(private val binding: LocationRowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -45,17 +41,8 @@ class LocationAdapter : PagingDataAdapter<LocationItem, LocationAdapter.Location
     }
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
-        val currentItem = locationList[position]
-        holder.bind(currentItem)
-
-    }
-
-    override fun getItemCount() = locationList.size
-
-    fun addLocationList(list: List<LocationItem>) {
-        locationList.clear()
-        locationList.addAll(list)
-        notifyDataSetChanged()
+        val currentItem = getItem(position)
+        holder.bind(currentItem!!)
     }
 
     object LocationDiffUtil : DiffUtil.ItemCallback<LocationItem>() {

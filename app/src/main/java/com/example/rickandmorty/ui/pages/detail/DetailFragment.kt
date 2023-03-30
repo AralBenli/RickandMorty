@@ -1,12 +1,7 @@
 package com.example.rickandmorty.ui.pages.detail
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -16,8 +11,7 @@ import com.example.rickandmorty.R
 import com.example.rickandmorty.constants.Constants
 import com.example.rickandmorty.databinding.FragmentDetailBinding
 import com.example.rickandmorty.ui.base.BaseFragment
-import com.example.rickandmorty.ui.pages.episodes.EpisodeViewModel
-import com.example.rickandmorty.ui.pages.episodes.adapter.EpisodeAdapter
+import com.example.rickandmorty.ui.pages.detail.adapter.DetailEpisodeAdapter
 import com.example.rickandmorty.ui.pages.main.MainActivity
 import com.example.rickandmorty.utils.Extensions.setImageUrl
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +24,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         FragmentDetailBinding.inflate(layoutInflater)
 
     private val detailViewModel: DetailViewModel by viewModels()
-    private var detailEpisodeAdapter = EpisodeAdapter()
+    private var detailEpisodeAdapter = DetailEpisodeAdapter()
     override fun initViews() {
         (requireActivity() as MainActivity).bottomNavigation(false)
         (requireActivity() as MainActivity).backNavigation(true)

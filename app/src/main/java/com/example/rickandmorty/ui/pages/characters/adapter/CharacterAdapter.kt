@@ -4,15 +4,9 @@ import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import androidx.core.view.isVisible
-import androidx.paging.CombinedLoadStates
-import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.CharacterLinearRowItemBinding
 import com.example.rickandmorty.databinding.CharacterRowItemBinding
 import com.example.rickandmorty.response.CharacterItem
@@ -37,7 +31,6 @@ class CharacterAdapter() :
         RecyclerView.ViewHolder(binding.root) {
 
 
-        private val progressBar: ProgressBar = binding.progressBar
         fun bind(characterList: CharacterItem ) {
             with(binding) {
                 charNameTxt.text = characterList.name

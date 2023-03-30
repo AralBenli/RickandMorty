@@ -6,12 +6,7 @@ import com.example.rickandmorty.databinding.CharacterRowItemBinding
 import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.utils.Extensions.setImageUrl
 
-
-
-
-
-
-class SearchAdapter() : RecyclerView.Adapter<SearchAdapter.CharacterViewHolder>() {
+class SearchAdapter : RecyclerView.Adapter<SearchAdapter.CharacterViewHolder>() {
 
     private val characterList: ArrayList<CharacterItem> = arrayListOf()
     var clickCharacter: ((item: CharacterItem) -> Unit)? = null

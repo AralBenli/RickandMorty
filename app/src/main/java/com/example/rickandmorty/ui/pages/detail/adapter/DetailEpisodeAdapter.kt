@@ -1,17 +1,14 @@
-package com.example.rickandmorty.ui.pages.episodes.adapter
-
-import android.text.SpannableString
-import android.text.style.UnderlineSpan
+package com.example.rickandmorty.ui.pages.detail.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.databinding.EpisodesRowItemBinding
 import com.example.rickandmorty.response.EpisodeItem
 
 
-class EpisodeAdapter : PagingDataAdapter<EpisodeItem, EpisodeAdapter.EpisodeViewHolder>(EpisodeDiffUtil) {
+class DetailEpisodeAdapter : RecyclerView.Adapter<DetailEpisodeAdapter.EpisodeViewHolder>() {
+
+    private val episodeList: ArrayList<EpisodeItem> = arrayListOf()
     var clickEpisode: ((item: EpisodeItem) -> Unit)? = null
 
 
@@ -19,12 +16,9 @@ class EpisodeAdapter : PagingDataAdapter<EpisodeItem, EpisodeAdapter.EpisodeView
         RecyclerView.ViewHolder(binding.root){
         fun bind(episodeList: EpisodeItem) {
             with(binding) {
+                episodeNameTxt.text = episodeList.name
                 episodeDateTxt.text = episodeList.airDate
                 episode.text = episodeList.episode
-                episodeNameTxt.text = episodeList.name
-                val staticTxtEpisode = SpannableString("Click to see characters")
-                staticTxtEpisode.setSpan(UnderlineSpan(), 0 , staticTxtEpisode.length, 0)
-                staticTxt.text = staticTxtEpisode
 
             }
             itemView.setOnClickListener {
@@ -41,17 +35,18 @@ class EpisodeAdapter : PagingDataAdapter<EpisodeItem, EpisodeAdapter.EpisodeView
         return EpisodeViewHolder(binding)
     }
 
+    override fun getItemCount() = episodeList.size
+
     override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
-        val currentItem = getItem(position)
-        holder.bind(currentItem!!)
+        val currentItem = episodeList[position]
+        holder.bind(currentItem)
     }
 
-    object EpisodeDiffUtil : DiffUtil.ItemCallback<EpisodeItem>() {
-        override fun areItemsTheSame(oldItem: EpisodeItem, newItem: EpisodeItem) =
-            oldItem.id == newItem.id
-
-        override fun areContentsTheSame(oldItem: EpisodeItem, newItem: EpisodeItem) =
-            oldItem == newItem
+    fun addEpisodeList(list: List<EpisodeItem>) {
+        episodeList.clear()
+        episodeList.addAll(list)
+        notifyDataSetChanged()
     }
+
 
 }

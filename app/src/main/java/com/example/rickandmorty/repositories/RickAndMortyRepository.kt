@@ -1,5 +1,3 @@
-@file:OptIn(DelicateCoroutinesApi::class)
-
 package com.example.rickandmorty.repositories
 
 import androidx.paging.Pager
@@ -10,8 +8,9 @@ import com.example.rickandmorty.api.RickAndMortyApi
 import com.example.rickandmorty.di.ApiResponse
 import com.example.rickandmorty.response.*
 import com.example.rickandmorty.ui.pages.characters.CharacterPagingSource
+import com.example.rickandmorty.ui.pages.episodes.EpisodePagingSource
+import com.example.rickandmorty.ui.pages.locations.LocationPagingSource
 import com.example.rickandmorty.utils.result
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
@@ -22,27 +21,39 @@ class RickAndMortyRepository @Inject constructor(
     private val api: RickAndMortyApi
 ) : IRickAndMortyRepository {
 
+    companion object {
+        private const val NETWORK_PAGE_SIZE_CHARACTER = 42
+        private const val NETWORK_PAGE_SIZE_EPISODE = 3
+        private const val NETWORK_PAGE_SIZE_LOCATION = 7
+    }
+
     override fun getCharacters(): Flow<PagingData<CharacterItem>> {
-       return  Pager(config = PagingConfig(
-                pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+        return Pager(config = PagingConfig(
+            pageSize = NETWORK_PAGE_SIZE_CHARACTER, enablePlaceholders = false
+        ),
             pagingSourceFactory = { CharacterPagingSource(api) }
         ).flow
-           .cachedIn(GlobalScope)
+            .cachedIn(GlobalScope)
     }
 
-    companion object {
-        private const val NETWORK_PAGE_SIZE = 42
+    override fun getEpisodes(): Flow<PagingData<EpisodeItem>> {
+        return Pager(config = PagingConfig(
+            pageSize = NETWORK_PAGE_SIZE_EPISODE, enablePlaceholders = false
+        ),
+            pagingSourceFactory = { EpisodePagingSource(api) }
+        ).flow
+            .cachedIn(GlobalScope)
     }
 
-    override fun getEpisodes(page: Int): Flow<ApiResponse<EpisodeResponse?>> =
-        result {
-            api.getEpisodes(page)
-        }.flowOn(Dispatchers.IO)
 
-    override fun getLocations(page: Int): Flow<ApiResponse<LocationResponse?>> =
-        result {
-            api.getLocations(page)
-        }.flowOn(Dispatchers.IO)
+    override fun getLocations(): Flow<PagingData<LocationItem>> {
+        return Pager(config = PagingConfig(
+            pageSize = NETWORK_PAGE_SIZE_LOCATION, enablePlaceholders = false
+        ),
+            pagingSourceFactory = { LocationPagingSource(api) }
+        ).flow
+            .cachedIn(GlobalScope)
+    }
 
 
     override fun getCharacterById(id: Int): Flow<ApiResponse<CharacterItem?>> =

@@ -9,9 +9,9 @@ interface IRickAndMortyRepository {
 
     fun getCharacters(): Flow<PagingData<CharacterItem>>
 
-    fun getEpisodes(page: Int): Flow<ApiResponse<EpisodeResponse?>>
+    fun getEpisodes(): Flow<PagingData<EpisodeItem>>
 
-    fun getLocations(page: Int): Flow<ApiResponse<LocationResponse?>>
+    fun getLocations(): Flow<PagingData<LocationItem>>
 
     fun getCharacterById(id: Int): Flow<ApiResponse<CharacterItem?>>
 

@@ -5,7 +5,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.rickandmorty.api.RickAndMortyApi
 import com.example.rickandmorty.response.CharacterItem
-import com.example.rickandmorty.response.CharactersResponse
 import javax.inject.Inject
 
 private const val STARTING_PAGE_INDEX = 1

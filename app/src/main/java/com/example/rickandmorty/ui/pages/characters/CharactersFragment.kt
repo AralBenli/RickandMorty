@@ -3,7 +3,6 @@ package com.example.rickandmorty.ui.pages.characters
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,8 +16,6 @@ import com.example.rickandmorty.utils.CalculateWindowSize
 import com.example.rickandmorty.utils.PagingLoadStateAdapter
 import com.example.rickandmorty.utils.WindowSizeClass
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
@@ -28,9 +25,9 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
 
     private val charactersViewModel: CharactersViewModel by viewModels()
     private var characterAdapter = CharacterAdapter()
-    lateinit var linearLayoutManager: LinearLayoutManager
-    lateinit var gridLayoutManager: GridLayoutManager
-    lateinit var widthWindowClass: WindowSizeClass
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var gridLayoutManager: GridLayoutManager
+    private lateinit var widthWindowClass: WindowSizeClass
     override fun initViews() {
         (requireActivity() as MainActivity).bottomNavigation(true)
         (requireActivity() as MainActivity).backNavigation(false)

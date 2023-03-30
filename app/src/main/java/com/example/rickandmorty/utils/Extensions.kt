@@ -7,9 +7,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
 object Extensions {
 
@@ -28,7 +25,7 @@ object Extensions {
     }
 }
 
-fun getCurrentDayAndTime(date:String) : String {
+/*fun getCurrentDayAndTime(date:String) : String {
     val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     simpleDateFormat.timeZone = TimeZone.getTimeZone("UTC")
     val date = simpleDateFormat.parse(date)
@@ -37,7 +34,7 @@ fun getCurrentDayAndTime(date:String) : String {
 
     val dateToWeekNameFormat: DateFormat = SimpleDateFormat("MM-dd-yyyy", Locale("tr"))
     return dateToWeekNameFormat.format(date)
-}
+}*/
 
 fun Fragment.findNavControllerSafely(): NavController? {
     return if (isAdded) {
@@ -46,8 +43,3 @@ fun Fragment.findNavControllerSafely(): NavController? {
         null
     }
 }
-
-fun NavController.lifeCycleNavigate(lifecycle : LifecycleCoroutineScope, resId :Int) =
-    lifecycle.launchWhenResumed {
-        navigate(resId)
-    }

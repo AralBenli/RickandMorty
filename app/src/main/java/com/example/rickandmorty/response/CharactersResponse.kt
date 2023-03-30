@@ -1,10 +1,7 @@
 package com.example.rickandmorty.response
 
-import androidx.paging.PagingData
-import androidx.paging.map
 import com.google.gson.annotations.SerializedName
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+
 
 data class CharactersResponse(
     @SerializedName("info")

@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.rickandmorty.R
 import com.example.rickandmorty.constants.Constants
 import com.example.rickandmorty.databinding.FragmentBottomSheetBinding
-import com.example.rickandmorty.ui.pages.locations.LocationViewModel
 import com.example.rickandmorty.ui.pages.popup.adapter.PopUpAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
