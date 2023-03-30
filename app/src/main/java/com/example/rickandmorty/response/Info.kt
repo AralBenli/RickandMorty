@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CharInfo(
+data class Info(
     @SerializedName("pages")
     val pages: Int? = 0,
     @SerializedName("count")

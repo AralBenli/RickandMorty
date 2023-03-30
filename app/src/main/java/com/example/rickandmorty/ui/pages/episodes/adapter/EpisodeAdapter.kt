@@ -7,15 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.EpisodesRowItemBinding
+import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.response.EpisodeItem
 
 
-class EpisodeAdapter : RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() {
+class EpisodeAdapter() : PagingDataAdapter<EpisodeItem, EpisodeAdapter.EpisodeViewHolder>(EpisodeDiffUtil) {
 
-    val episodeList: ArrayList<EpisodeItem> = arrayListOf()
+    private val episodeList: ArrayList<EpisodeItem> = arrayListOf()
     var clickEpisode: ((item: EpisodeItem) -> Unit)? = null
 
 
@@ -23,11 +26,12 @@ class EpisodeAdapter : RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() 
         RecyclerView.ViewHolder(binding.root){
         fun bind(episodeList: EpisodeItem) {
             with(binding) {
-                val episodeName = SpannableString( episodeList.name)
-                episodeName.setSpan(UnderlineSpan(), 0, episodeName.length, 0)
                 episodeDateTxt.text = episodeList.airDate
                 episode.text = episodeList.episode
-                episodeNameTxt.text = episodeName
+                episodeNameTxt.text = episodeList.name
+                val staticTxtEpisode = SpannableString("Click to see characters")
+                staticTxtEpisode.setSpan(UnderlineSpan(), 0 , staticTxtEpisode.length, 0)
+                staticTxt.text = staticTxtEpisode
 
             }
             itemView.setOnClickListener {
@@ -56,6 +60,12 @@ class EpisodeAdapter : RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() 
         episodeList.addAll(list)
         notifyDataSetChanged()
     }
+    object EpisodeDiffUtil : DiffUtil.ItemCallback<EpisodeItem>() {
+        override fun areItemsTheSame(oldItem: EpisodeItem, newItem: EpisodeItem) =
+            oldItem.id == newItem.id
 
+        override fun areContentsTheSame(oldItem: EpisodeItem, newItem: EpisodeItem) =
+            oldItem == newItem
+    }
 
 }

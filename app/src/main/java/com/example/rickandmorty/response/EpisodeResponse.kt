@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class EpisodeResponse(
     @SerializedName("info")
-    val info: CharInfo? = CharInfo(),
+    val info: Info? = Info(),
     @SerializedName("results")
     val results: List<EpisodeItem>? = emptyList()
 ): Parcelable

@@ -1,17 +1,18 @@
 package com.example.rickandmorty.ui.pages.locations.adapter
 
 
-import android.graphics.Color
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.LocationRowItemBinding
+import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.response.LocationItem
 
-class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>() {
+class LocationAdapter : PagingDataAdapter<LocationItem, LocationAdapter.LocationViewHolder>(LocationDiffUtil) {
 
     private val locationList: ArrayList<LocationItem> = arrayListOf()
     var clickLocation: ((item: LocationItem) -> Unit)? = null
@@ -55,5 +56,13 @@ class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>
         locationList.clear()
         locationList.addAll(list)
         notifyDataSetChanged()
+    }
+
+    object LocationDiffUtil : DiffUtil.ItemCallback<LocationItem>() {
+        override fun areItemsTheSame(oldItem: LocationItem, newItem: LocationItem) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: LocationItem, newItem: LocationItem) =
+            oldItem == newItem
     }
 }

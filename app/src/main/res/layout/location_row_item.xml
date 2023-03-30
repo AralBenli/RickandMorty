@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="10dp"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     android:background="@drawable/background_edge_circle"
-    android:layout_height="wrap_content">
+    android:padding="10dp">
 
     <LinearLayout
         android:id="@+id/locationRowMainRoot"
@@ -80,9 +80,9 @@
 
             <TextView
                 android:id="@+id/locationDimensionTxt"
-                android:layout_weight="0.3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.3"
                 android:background="@drawable/background_episodes"
                 android:padding="10dp"
                 android:textColor="@color/air_brown"
@@ -95,10 +95,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/transparent_black"
             android:backgroundTint="@color/transparent_black"
-            android:textAlignment="center"
             android:padding="20dp"
+            android:textAlignment="center"
+            android:textColor="@color/transparent_black"
+            android:textStyle="italic"
             tools:text="Click to see residents of planet" />
 
     </LinearLayout>

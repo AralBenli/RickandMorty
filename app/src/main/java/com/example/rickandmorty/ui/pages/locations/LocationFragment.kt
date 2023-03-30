@@ -18,7 +18,6 @@ import com.example.rickandmorty.databinding.FragmentLocationBinding
 import com.example.rickandmorty.ui.base.BaseFragment
 import com.example.rickandmorty.ui.pages.locations.adapter.LocationAdapter
 import com.example.rickandmorty.ui.pages.main.MainActivity
-import com.example.rickandmorty.ui.pages.popup.adapter.PopUpAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -38,7 +37,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
         (requireActivity() as MainActivity).searchIcon(false)
 
         locationViewModel.fetchLocations(1)
-
+        binding.locationRecyclerView.adapter = locationAdapter
     }
 
     override fun observer() {
@@ -63,7 +62,7 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
                                     locationAdapter.addLocationList(it)
                                 }
                             }
-                            locationRecyclerView.adapter = locationAdapter
+
                             locationRecyclerView.setHasFixedSize(true)
                         }
                     }
@@ -71,11 +70,10 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
             }
         }
 
+        /** Type(location) and id sent to Bottom Sheet Fragment  */
         locationAdapter.clickLocation = {
-            val bundle = bundleOf("season" to it.name , "id" to it.id )
-            bundle.putInt("type", Constants.typeLocation)
+            val bundle = bundleOf("type" to Constants.typeLocation , "id" to it.id )
             findNavController().navigate(R.id.locationToBottom , bundle)
-
         }
     }
 }

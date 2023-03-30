@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@drawable/background_pop_up"
+    android:background="@drawable/episode_bg_circle_edges"
     android:padding="5dp">
 
     <com.google.android.material.imageview.ShapeableImageView

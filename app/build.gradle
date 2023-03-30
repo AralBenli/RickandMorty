@@ -52,6 +52,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.core:core-ktx:1.9.0'
 
+    // Swipe refresh layout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01"
+    implementation 'androidx.room:room-common:2.5.1'
 
     // Navigation
     def nav_version = "2.5.3"
@@ -81,6 +84,10 @@ dependencies {
     implementation "androidx.paging:paging-common-ktx:$paging_version" // For Kotlin use paging-runtime-ktx
     implementation "androidx.paging:paging-runtime-ktx:$paging_version" // For Kotlin use paging-runtime-ktx
 
+
+
+    // window Manager
+    implementation "androidx.window:window:1.1.0-alpha02"
 
 
 }

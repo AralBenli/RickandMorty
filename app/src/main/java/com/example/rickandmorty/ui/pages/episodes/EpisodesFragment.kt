@@ -32,12 +32,12 @@ class EpisodesFragment : BaseFragment<FragmentEpisodesBinding>() {
         (requireActivity() as MainActivity).searchIcon(false)
 
         episodeViewModel.fetchEpisodes(1)
-
+        binding.episodeRecyclerView.adapter = episodeAdapter
     }
 
     override fun observer() {
 
-        lifecycleScope.launchWhenStarted {
+       /* lifecycleScope.launchWhenStarted {
             episodeViewModel._progressStateFlow.collectLatest { showProgress ->
                 if (showProgress) {
                     showLoadingProgress()
@@ -45,21 +45,20 @@ class EpisodesFragment : BaseFragment<FragmentEpisodesBinding>() {
                     dismissLoadingProgress()
                 }
             }
-        }
+        }*/
 
         lifecycleScope.launchWhenStarted {
             episodeViewModel._episodeStateFlow.collectLatest { episodeResponse ->
                 episodeResponse?.let {
                     with(binding) {
                         it.results?.let { episode -> episodeAdapter.addEpisodeList(episode) }
-                        episodeRecyclerView.adapter = episodeAdapter
                         episodeRecyclerView.setHasFixedSize(true)
                     }
                 }
             }
         }
 
-
+        /** Type(episode) , id and season text ; sent to Bottom Sheet Fragment  */
         episodeAdapter.clickEpisode = {
             val bundle = bundleOf("season" to it.episode , "id" to it.id )
             bundle.putInt("type",Constants.typeEpisode)

@@ -91,7 +91,7 @@
         app:menu="@menu/nav_menu"
         app:headerLayout="@layout/drawer_header"
         android:clickable="true"
-        android:layout_gravity="start"
+        android:layout_gravity="end"
         android:fitsSystemWindows="true">
 
     </com.google.android.material.navigation.NavigationView>

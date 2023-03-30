@@ -5,13 +5,20 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentCharactersBinding
 import com.example.rickandmorty.ui.base.BaseFragment
 import com.example.rickandmorty.ui.pages.characters.adapter.CharacterAdapter
 import com.example.rickandmorty.ui.pages.main.MainActivity
+import com.example.rickandmorty.utils.CalculateWindowSize
+import com.example.rickandmorty.utils.PagingLoadStateAdapter
+import com.example.rickandmorty.utils.WindowSizeClass
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
@@ -21,48 +28,34 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
 
     private val charactersViewModel: CharactersViewModel by viewModels()
     private var characterAdapter = CharacterAdapter()
-
+    lateinit var linearLayoutManager: LinearLayoutManager
+    lateinit var gridLayoutManager: GridLayoutManager
+    lateinit var widthWindowClass: WindowSizeClass
     override fun initViews() {
         (requireActivity() as MainActivity).bottomNavigation(true)
         (requireActivity() as MainActivity).backNavigation(false)
         (requireActivity() as MainActivity).searchIcon(true)
         (requireActivity() as MainActivity).actionBar(true)
+        widthWindowClass = CalculateWindowSize(requireActivity()).calculateCurrentWidthSize()
 
-/*
-        binding.themeIcon.setButtonDrawable(R.drawable.icon_dark)
-*/
 
-        charactersViewModel.fetchCharacter(1)
+        binding.recyclerViewCharacters.adapter = characterAdapter.withLoadStateHeaderAndFooter(
+            header = PagingLoadStateAdapter(),
+            footer = PagingLoadStateAdapter()
+        )
+        charactersViewModel.fetchCharacters()
+
         detailNavigation()
-/*
-        theme()
-*/
-
+        swipeRefresh()
+        selectList()
     }
 
     override fun observer() {
-        lifecycleScope.launchWhenStarted {
-            charactersViewModel._progressStateFlow.collectLatest { showProgress ->
-                if (showProgress) {
-                    showLoadingProgress()
-                } else {
-                    dismissLoadingProgress()
-                }
-            }
-        }
-
-        lifecycleScope.launchWhenStarted {
-            charactersViewModel._characterStateFlow.collectLatest {
-                it?.let {
-                    with(binding) {
-                        characterAdapter.addCharacterList(it.results)
-                        recyclerViewCharacters.adapter = characterAdapter
-                        recyclerViewCharacters.setHasFixedSize(true)
-                    }
-                }
-            }
+        charactersViewModel.characters.observe(viewLifecycleOwner) { pagingData ->
+            characterAdapter.submitData(lifecycle, pagingData)
         }
     }
+
 
     private fun detailNavigation() {
         characterAdapter.clickCharacter = {
@@ -71,55 +64,63 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
             findNavController().navigate(R.id.detailFragment, bundle)
         }
     }
+
+    private fun swipeRefresh() {
+        binding.homeSwipeRefreshLayout.setOnRefreshListener {
+            charactersViewModel.fetchCharacters()
+            binding.homeSwipeRefreshLayout.isRefreshing = false
+
+        }
+    }
+
+    private fun selectList() {
+        binding.iconListChoice.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                /** if list icon selected it bind adapter for the linear layout manager */
+                binding.recyclerViewCharacters.adapter =
+                    characterAdapter.withLoadStateHeaderAndFooter(
+                        header = PagingLoadStateAdapter(),
+                        footer = PagingLoadStateAdapter()
+                    )
+                linearLayoutManager = LinearLayoutManager(requireContext())
+                binding.recyclerViewCharacters.layoutManager = linearLayoutManager
+                characterAdapter.viewtype = 2
+
+                binding.recyclerViewCharacters.addItemDecoration(
+                    DividerItemDecoration(
+                        requireContext(),
+                        LinearLayoutManager.VERTICAL
+                    )
+                )
+                /** fetching characters for the new layout manager when button clicked  */
+                charactersViewModel.fetchCharacters()
+
+
+            } else {
+                /** default icon  it bind adapter for the grid layout manager widthWindowClass
+                 * detect the width of screen and picks the right span count */
+                binding.recyclerViewCharacters.adapter =
+                    characterAdapter.withLoadStateHeaderAndFooter(
+                        header = PagingLoadStateAdapter(),
+                        footer = PagingLoadStateAdapter()
+                    )
+
+                val spanCount = if (widthWindowClass == WindowSizeClass.EXPANDED) 3 else 2
+                gridLayoutManager =
+                    GridLayoutManager(
+                        requireContext(),
+                        spanCount,
+                        GridLayoutManager.VERTICAL,
+                        false
+                    )
+                binding.recyclerViewCharacters.layoutManager = gridLayoutManager
+                characterAdapter.viewtype = 1
+                /** fetching characters for the new layout manager when button clicked  */
+                charactersViewModel.fetchCharacters()
+            }
+        }
+    }
 }
 
-/*
-    private fun theme() {
-        with(binding) {
-            themeIcon.setOnCheckedChangeListener { button, isChecked ->
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    button.setButtonDrawable(R.drawable.icon_light)
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    button.setButtonDrawable(R.drawable.icon_dark)
-
-                }
-            }
-        }
-    }
-*/
-
-
-
-/* private fun carouselSelector()  {
-    binding.recyclerViewCarousel.adapter = carouselAdapter
-    carouselAdapter.addCarouselList(scrollView)
-    carouselAdapter.clickCarousel = {
-        val bundle = Bundle()
-        when (it) {
-            1 -> {
-                bundle.putInt("id",1)
-                findNavController().navigate(R.id.detailFragment, bundle)
-            }
-            2 -> {
-                bundle.putInt("id",2)
-                findNavController().navigate(R.id.detailFragment, bundle)
-            }
-            3 -> {
-                bundle.putInt("id",3)
-                findNavController().navigate(R.id.detailFragment, bundle)
-            }
-            4 -> {
-                bundle.putInt("id",4)
-                findNavController().navigate(R.id.detailFragment, bundle)
-            }
-            5 -> {
-                bundle.putInt("id",5)
-                findNavController().navigate(R.id.detailFragment, bundle)
-            }
-        }
-    }
-} */
 
 

@@ -101,7 +101,7 @@ class BottomSheetViewModel @Inject constructor(
     val _characterFromLocationStateFlow : SharedFlow<List<CharacterItem>?> = charactersFromLocationStateFlow
 
 
-
+    /** Bottom Sheet Fragment - "List of image requests" */
     fun fetchGetMoreCharactersThanOne(characterList: List<String>){
         viewModelScope.launch{
             repo.getMoreCharactersThanOne(characterList).collectLatest {

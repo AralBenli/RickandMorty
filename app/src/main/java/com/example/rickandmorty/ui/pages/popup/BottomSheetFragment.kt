@@ -35,6 +35,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     ): View {
         binding = FragmentBottomSheetBinding.inflate(layoutInflater)
         return binding.root
+
     }
 
     override fun getTheme(): Int {
@@ -46,8 +47,13 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         val getId = requireArguments().getInt("id")
         val getSeasonNum = requireArguments().getString("season")
+        binding.recyclerViewCharacters.adapter = popUpAdapter
+
 
         when (requireArguments().getInt("type")) {
+
+            /** if type comes from episode it binds episode items */
+
             Constants.typeEpisode -> {
 
                 bottomSheetViewModel.fetchEpisodeById(getId)
@@ -82,6 +88,8 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                 printImageAndActiveNavigation()
             }
 
+            /** if type comes from location it binds episode items */
+
             Constants.typeLocation -> {
 
                 bottomSheetViewModel.fetchLocationById(getId)
@@ -103,6 +111,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                             binding.popUpEpisodeName.text = it.name
                             binding.popUpDate.text = it.dimension
                             val residentsOfPlanet = it.residents?.map { char ->
+                                /** residents is a full request ,Only numbers taken for Bottom Sheet Fragment  */
                                 char.substring(startIndex = char.lastIndexOf("/") + 1)
                             }
                             if (!residentsOfPlanet.isNullOrEmpty()) {
@@ -120,6 +129,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
+    /** Bottom Sheet Fragment - "List of image requests" and navigation to detail */
     private fun printImageAndActiveNavigation() {
         lifecycleScope.launchWhenStarted {
             bottomSheetViewModel._progressStateFlow.collectLatest { showProgress ->
@@ -134,7 +144,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             bottomSheetViewModel._characterFromLocationStateFlow.collectLatest { characterResponse ->
                 characterResponse.let {
                     it?.let { its -> popUpAdapter.addPopUpList(its) }
-                    binding.recyclerViewCharacters.adapter = popUpAdapter
                 }
             }
         }
@@ -144,6 +153,8 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             findNavController().navigate(R.id.detailFragment, bundle)
         }
     }
+
+
     private fun showLoadingProgressForBottom() {
         if (!::progressDialog.isInitialized) {
             progressDialog = Dialog(requireContext())

@@ -5,7 +5,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -36,17 +38,19 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
 
         val getId = requireArguments().getInt("detailId")
         detailViewModel.fetchCharacterById(getId)
-
+        popUpWindows()
+        favoriteCharacter()
+        shareCharacter()
     }
 
     override fun observer() {
-        popUpWindows()
+
         lifecycleScope.launchWhenStarted {
             detailViewModel._progressStateFlow.collectLatest { showProgress ->
                 if (showProgress) {
-                    showLoadingProgress()
+                    binding.detailProgressBar.visibility = View.VISIBLE
                 } else {
-                    dismissLoadingProgress()
+                    binding.detailProgressBar.visibility = View.GONE
                 }
             }
         }
@@ -64,7 +68,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
                             it.substring(startIndex = it.lastIndexOf("/") + 1)
                         }
                         detailViewModel.fetchEpisodesFromCharacter(episodeRange.toString())
-                        Log.d("msg",episodeRange.toString())
+                        Log.d("msg", episodeRange.toString())
 
                         when (detailCharStatusTxt.text) {
                             "Alive" -> {
@@ -96,9 +100,9 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         lifecycleScope.launchWhenStarted {
             detailViewModel._progressStateFlow.collectLatest { showProgress ->
                 if (showProgress) {
-                    showLoadingProgress()
+                    binding.detailProgressBar.visibility = View.VISIBLE
                 } else {
-                    dismissLoadingProgress()
+                    binding.detailProgressBar.visibility = View.GONE
                 }
             }
         }
@@ -118,9 +122,36 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
 
     private fun popUpWindows() {
         detailEpisodeAdapter.clickEpisode = {
-            val bundle = bundleOf("season" to it.episode , "id" to it.id)
-            bundle.putInt("type",Constants.typeEpisode)
-            findNavController().navigate(R.id.detailtoBottom , bundle)
+            val bundle = bundleOf("season" to it.episode, "id" to it.id)
+            bundle.putInt("type", Constants.typeEpisode)
+            findNavController().navigate(R.id.detailtoBottom, bundle)
+        }
+    }
+
+    private fun favoriteCharacter() {
+        with(binding) {
+            favoriteButton.setOnCheckedChangeListener { _ , isChecked ->
+                if (isChecked) {
+                    Toast.makeText(activity, "Character added to favorites", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(
+                        activity,
+                        "Character removed from favorites",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+            }
+        }
+    }
+
+
+    private fun shareCharacter() {
+        with(binding) {
+            shareIcon.setOnClickListener {
+                Toast.makeText(activity, "Coming Soon", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

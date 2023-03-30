@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class LocationResponse(
     @SerializedName("info")
-    val info: CharInfo? = CharInfo(),
+    val info: Info? = Info(),
     @SerializedName("results")
     val results: List<LocationItem>? = emptyList()
 ):Parcelable

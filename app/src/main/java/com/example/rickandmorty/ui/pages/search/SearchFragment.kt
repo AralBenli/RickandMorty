@@ -8,8 +8,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentSearchBinding
 import com.example.rickandmorty.ui.base.BaseFragment
-import com.example.rickandmorty.ui.pages.characters.adapter.CharacterAdapter
 import com.example.rickandmorty.ui.pages.main.MainActivity
+import com.example.rickandmorty.ui.pages.search.adapter.SearchAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.collectLatest
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private val searchViewModel: SearchViewModel by viewModels()
-    private var searchAdapter = CharacterAdapter()
+    private var searchAdapter = SearchAdapter()
     lateinit var text: String
     private var status: String = "alive"
     override fun getViewBinding(): FragmentSearchBinding =
@@ -29,6 +29,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         (requireActivity() as MainActivity).searchIcon(false)
         (requireActivity() as MainActivity).actionBar(true)
 
+        binding.searchRecyclerView.adapter = searchAdapter
         detailNavigation()
         setSearchView()
     }
@@ -49,8 +50,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             searchViewModel._searchStateFlow.collectLatest {
                 it?.let {
                     with(binding) {
-                        searchAdapter.addCharacterList(it.results)
-                        searchRecyclerView.adapter = searchAdapter
+                        it.results?.let { its -> searchAdapter.addCharacterList(its) }
                         searchRecyclerView.setHasFixedSize(true)
                     }
                 }
