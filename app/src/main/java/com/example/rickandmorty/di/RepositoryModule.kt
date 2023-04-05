@@ -1,5 +1,6 @@
 package com.example.rickandmorty.di
 
+import androidx.lifecycle.ViewModel
 import com.example.rickandmorty.api.RickAndMortyApi
 import com.example.rickandmorty.local.RickAndMortyRoomDatabase
 import com.example.rickandmorty.repositories.IRickAndMortyRepository
@@ -8,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
 
 
 @Module
@@ -17,8 +19,9 @@ class RepositoryModule {
     @Provides
     fun provideRickAndMortyRepository(
         rickAndMortyApi: RickAndMortyApi ,
-        db: RickAndMortyRoomDatabase
+        db: RickAndMortyRoomDatabase ,
+        scope: CoroutineScope
     ): IRickAndMortyRepository {
-        return RickAndMortyRepository(rickAndMortyApi , db.rickMortyDao)
+        return RickAndMortyRepository(rickAndMortyApi , db.rickMortyDao , scope)
     }
 }

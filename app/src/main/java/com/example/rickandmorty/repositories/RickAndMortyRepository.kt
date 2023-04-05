@@ -1,5 +1,6 @@
 package com.example.rickandmorty.repositories
 
+import androidx.lifecycle.ViewModel
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -12,18 +13,15 @@ import com.example.rickandmorty.ui.pages.characters.CharacterPagingSource
 import com.example.rickandmorty.ui.pages.episodes.EpisodePagingSource
 import com.example.rickandmorty.ui.pages.locations.LocationPagingSource
 import com.example.rickandmorty.utils.result
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-@DelicateCoroutinesApi
 class RickAndMortyRepository @Inject constructor(
     private val api: RickAndMortyApi,
-    private val dao: RickAndMortyDao
+    private val dao: RickAndMortyDao,
+    private val scope : CoroutineScope
 ) : IRickAndMortyRepository {
 
     companion object {
@@ -33,12 +31,13 @@ class RickAndMortyRepository @Inject constructor(
     }
 
     override fun getCharacters(): Flow<PagingData<CharacterItem>> {
-        return Pager(config = PagingConfig(
-            pageSize = NETWORK_PAGE_SIZE_CHARACTER, enablePlaceholders = false
-        ),
+        return Pager(
+            config = PagingConfig(
+                pageSize = NETWORK_PAGE_SIZE_CHARACTER, enablePlaceholders = false
+            ),
             pagingSourceFactory = { CharacterPagingSource(api) }
         ).flow
-            .cachedIn(GlobalScope)
+            .cachedIn(scope)
     }
 
     override fun getEpisodes(): Flow<PagingData<EpisodeItem>> {
@@ -47,7 +46,7 @@ class RickAndMortyRepository @Inject constructor(
         ),
             pagingSourceFactory = { EpisodePagingSource(api) }
         ).flow
-            .cachedIn(GlobalScope)
+            .cachedIn(scope)
     }
 
 
@@ -57,7 +56,7 @@ class RickAndMortyRepository @Inject constructor(
         ),
             pagingSourceFactory = { LocationPagingSource(api) }
         ).flow
-            .cachedIn(GlobalScope)
+            .cachedIn(scope)
     }
 
 
