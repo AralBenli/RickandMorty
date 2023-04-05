@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @DelicateCoroutinesApi
@@ -93,21 +94,36 @@ class RickAndMortyRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
 
     override fun getAllFavoriteCharacters(): Flow<List<CharacterItem>> {
-        return dao.getAllFavoriteCharacters()    }
+        return dao.getAllFavoriteCharacters()
+    }
 
     override suspend fun addCharacterToFavoriteList(character: CharacterItem) {
         character.isFavorite = true
-        dao.addFavoriteCharacter(character = character)
+        dao.addFavoriteCharacter(character)
         dao.updateCharacter(character)
+        dao.updateFavoriteState(character.id!!, true)
+
     }
 
     override suspend fun deleteCharacterFromMyFavoriteList(character: CharacterItem) {
         character.isFavorite = false
         dao.deleteFavoriteCharacter(character)
+        dao.updateCharacter(character)
+        dao.updateFavoriteState(character.id!!, false)
+
     }
 
-    override suspend fun updateCharacters(character: CharacterItem) {
+    override suspend fun updateFavoriteState(id: Int, isFavorite: Boolean) {
+        dao.updateFavoriteState(id, isFavorite)
+    }
+
+    override suspend fun updateCharacter(character: CharacterItem?) {
         dao.updateCharacter(character)
+    }
+
+    override suspend fun isCharacterInFavorites(id: Int): Boolean =
+        withContext(Dispatchers.IO) {
+        dao.isCharacterInFavorites(id)
     }
 
 

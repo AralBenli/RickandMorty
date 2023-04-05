@@ -2,7 +2,6 @@ package com.example.rickandmorty.ui.pages.detail
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.SharedPreferences
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
@@ -17,10 +16,8 @@ import com.example.rickandmorty.databinding.FragmentDetailBinding
 import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.ui.base.BaseFragment
 import com.example.rickandmorty.ui.pages.detail.adapter.DetailEpisodeAdapter
-import com.example.rickandmorty.ui.pages.favorite.FavoriteViewModel
 import com.example.rickandmorty.ui.pages.main.MainActivity
 import com.example.rickandmorty.utils.Extensions.setImageUrl
-import com.example.rickandmorty.utils.SharedPreferencesManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -31,7 +28,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
     override fun getViewBinding(): FragmentDetailBinding =
         FragmentDetailBinding.inflate(layoutInflater)
 
-    private val detailToFavoriteViewModel: FavoriteViewModel by viewModels()
     private val detailViewModel: DetailViewModel by viewModels()
     private var detailEpisodeAdapter = DetailEpisodeAdapter()
     lateinit var layoutManager: LinearLayoutManager
@@ -43,12 +39,8 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         (requireActivity() as MainActivity).searchIcon(false)
         (requireActivity() as MainActivity).settings(false)
         val getId = requireArguments().getInt("detailId")
-        val characterItem = requireArguments().getParcelable<CharacterItem>("characterItem")
 
-        if (characterItem != null) {
-            getFavoriteIcon(characterItem)
-        }
-        characterItem?.isFavorite = detailToFavoriteViewModel.isFavorite
+
 
         with(binding) {
             layoutManager =
@@ -201,42 +193,21 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
             favoriteButton.isChecked = character.isFavorite
             favoriteButton.setOnCheckedChangeListener { _, isChecked ->
                 character.isFavorite = isChecked
-                detailToFavoriteViewModel.isFavorite = isChecked
-                character.setFavoriteState(isChecked)
+                detailViewModel.isFavorite = isChecked
                 lifecycleScope.launch {
-                    detailToFavoriteViewModel.updateCharacter(character)
+                    detailViewModel.updateFavoriteState(character.id ?: 0, isChecked)
                     if (isChecked) {
-                        character.isFavorite = true
-                        SharedPreferencesManager.putBoolean(
-                            requireContext(),
-                            "Favorite${character.id}",
-                            true
-                        )
-                        detailToFavoriteViewModel.addCharacterToFavorites(character)
-                        showCustomToast(
-                            Status.Added,
-                            "Character added to favorites",
-                            this@DetailFragment
-                        )
+                        detailViewModel.addCharacterToFavorites(character)
+                        showCustomToast(Status.Added, "Character added to favorites", this@DetailFragment)
                     } else {
-                        character.isFavorite = false
-                        SharedPreferencesManager.putBoolean(
-                            requireContext(),
-                            "Favorite${character.id}",
-                            false
-                        )
-                        detailToFavoriteViewModel.isFavorite = false
-                        detailToFavoriteViewModel.deleteCharacter(character)
-                        showCustomToast(
-                            Status.Removed,
-                            "Character removed from favorites",
-                            this@DetailFragment
-                        )
+                        detailViewModel.deleteCharacter(character)
+                        showCustomToast(Status.Removed, "Character removed from favorites", this@DetailFragment)
                     }
                 }
             }
         }
     }
+
 
 
     private fun shareCharacter(charId: Int) {
@@ -251,10 +222,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         }
     }
 
-    private fun getFavoriteIcon(character: CharacterItem) {
-        binding.favoriteButton.isChecked =
-            !SharedPreferencesManager.getBoolean(requireContext(), "Favorite${character.id}", false)
-        }
     }
 
 

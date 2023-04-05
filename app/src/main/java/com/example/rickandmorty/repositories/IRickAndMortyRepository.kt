@@ -39,6 +39,11 @@ interface IRickAndMortyRepository {
 
     suspend fun deleteCharacterFromMyFavoriteList(character: CharacterItem)
 
-    suspend fun updateCharacters(character : CharacterItem)
+    suspend fun updateFavoriteState(id: Int, isFavorite: Boolean)
+
+    suspend fun updateCharacter(character: CharacterItem?)
+
+    suspend fun isCharacterInFavorites(id: Int): Boolean
 
 }
+

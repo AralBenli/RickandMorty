@@ -6,6 +6,7 @@ import com.example.rickandmorty.di.ApiResponse
 import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.repositories.IRickAndMortyRepository
 import com.example.rickandmorty.response.EpisodeItem
+import com.example.rickandmorty.response.FavoriteState
 import com.example.rickandmorty.ui.base.BaseViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +28,9 @@ class DetailViewModel @Inject constructor(
 
     private val toastMessageObserver: MutableLiveData<String> = MutableLiveData()
 
+
+
+
     fun fetchCharacterById(id: Int) {
         viewModelScope.launch {
             repo.getCharacterById(id).collectLatest {
@@ -35,9 +39,11 @@ class DetailViewModel @Inject constructor(
                         progressStateFlow.value = true
                     }
                     is ApiResponse.Success -> {
-                        detailStateFlow.emit(it.data)
+                        val character = it.data
+                        val isFavorite = character?.let { id -> repo.isCharacterInFavorites(id.id!!) }
+                        character?.isFavorite = isFavorite!!
+                        detailStateFlow.emit(character)
                         progressStateFlow.value = false
-
                     }
                     is ApiResponse.Failure -> {
                         try {
@@ -55,6 +61,8 @@ class DetailViewModel @Inject constructor(
             }
         }
     }
+
+
 
     private val characterEpisodesStateFlow: MutableSharedFlow<List<EpisodeItem>?> =
         MutableSharedFlow()
@@ -85,4 +93,31 @@ class DetailViewModel @Inject constructor(
             }
         }
     }
+
+    var isFavorite = false
+    fun addCharacterToFavorites(character: CharacterItem) {
+        character.isFavorite = true
+        viewModelScope.launch {
+            viewModelScope.launch {
+                repo.addCharacterToFavoriteList(character)
+            }
+        }
+    }
+
+    fun deleteCharacter(character: CharacterItem) {
+        character.isFavorite = false
+        viewModelScope.launch {
+            repo.deleteCharacterFromMyFavoriteList(character)
+
+        }
+    }
+
+    fun updateFavoriteState(id: Int, isFavorite: Boolean) {
+        viewModelScope.launch {
+            repo.updateFavoriteState(id, isFavorite)
+        }
+    }
+
+
+
 }

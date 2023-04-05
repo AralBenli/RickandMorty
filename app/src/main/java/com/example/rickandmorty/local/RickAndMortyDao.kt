@@ -18,6 +18,14 @@ interface RickAndMortyDao {
     @Delete
     suspend fun deleteFavoriteCharacter(character: CharacterItem?)
 
+
     @Update
     suspend fun updateCharacter(character: CharacterItem?)
+
+    @Query("UPDATE characterItem SET isFavorite=:isFavorite WHERE id=:id")
+    suspend fun updateFavoriteState(id: Int, isFavorite: Boolean)
+
+    @Query("SELECT EXISTS(SELECT 1 FROM characterItem WHERE id = :id)")
+    suspend fun isCharacterInFavorites(id: Int): Boolean
+
 }

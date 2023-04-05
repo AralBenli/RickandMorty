@@ -21,8 +21,6 @@ class FavoriteViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(FavoriteState())
     val state: StateFlow<FavoriteState> get() = _state
-    var isFavorite = false
-
 
 
     init {
@@ -45,30 +43,15 @@ class FavoriteViewModel @Inject constructor(
     }
 
 
-
     fun fetchFavoriteCharacters(): Flow<List<CharacterItem>> {
-        return repo.getAllFavoriteCharacters()
-
-    }
-
-
-    fun addCharacterToFavorites(character: CharacterItem) {
-        character.isFavorite = true
-        viewModelScope.launch {
-            repo.addCharacterToFavoriteList(character)
-        }
-    }
-    fun updateCharacter(character: CharacterItem) {
-        viewModelScope.launch {
-            repo.updateCharacters(character)
+        return repo.getAllFavoriteCharacters().map { list ->
+            list.map { character ->
+                character.apply {
+                    isFavorite = true // Set the isFavorite field to true for characters in the favorite list
+                }
+            }
         }
     }
 
-    fun deleteCharacter(charactersDomain: CharacterItem) {
-        charactersDomain.isFavorite = false
-        viewModelScope.launch {
-            repo.deleteCharacterFromMyFavoriteList(charactersDomain)
-        }
-    }
 }
 
