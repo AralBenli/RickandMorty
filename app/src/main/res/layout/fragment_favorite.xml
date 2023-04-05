@@ -6,20 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".ui.pages.favorite.FavoriteFragment">
 
-    <TextView
-        android:id="@+id/favoritesStaticTxt"
+
+    <LinearLayout
+        android:id="@+id/favoriteTopRoot"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@color/transparent_black"
-        android:padding="15dp"
-        android:text="FAVORITES"
-        android:textColor="@color/air_blue"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/favoritesStaticTxt"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="15dp"
+            android:text="FAVORITES"
+            android:textColor="@color/air_blue"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/favorite_icon_list_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:button="@drawable/main_list_selector"
+            app:useMaterialThemeColors="false" />
+
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_favorite"
         android:layout_width="match_parent"
@@ -31,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/favoritesStaticTxt"
+        app:layout_constraintTop_toBottomOf="@id/favoriteTopRoot"
         tools:listitem="@layout/character_row_item" />
 
 

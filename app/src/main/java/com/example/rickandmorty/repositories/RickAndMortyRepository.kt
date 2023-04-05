@@ -1,6 +1,5 @@
 package com.example.rickandmorty.repositories
 
-import androidx.lifecycle.ViewModel
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData

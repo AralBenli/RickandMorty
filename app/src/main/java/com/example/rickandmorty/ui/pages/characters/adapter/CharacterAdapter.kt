@@ -87,9 +87,6 @@ class CharacterAdapter() :
             is CharacterLinearViewHolder -> {
                 holder.bind(currentItem!!)
 
-               /* holder.itemView.animation = AnimationUtils.loadAnimation(
-                    holder.itemView.context,
-                    R.anim.up_anim)*/
 
             }
         }

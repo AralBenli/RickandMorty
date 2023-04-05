@@ -6,7 +6,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.rickandmorty.response.CharacterItem
 
 object Extensions {
 

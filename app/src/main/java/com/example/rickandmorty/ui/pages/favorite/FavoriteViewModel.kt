@@ -27,14 +27,14 @@ class FavoriteViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 fetchFavoriteCharacters().collect {
-                    _state.value = _state.value.copy(
+                    _state.value = state.value.copy(
                         characterList = it,
-                        isError = true
+                        isError = false
                     )
                 }
 
             } catch (e: Exception) {
-                _state.value = _state.value.copy(
+                _state.value = state.value.copy(
                     characterList = emptyList(),
                     isError = true
                 )
@@ -47,7 +47,7 @@ class FavoriteViewModel @Inject constructor(
         return repo.getAllFavoriteCharacters().map { list ->
             list.map { character ->
                 character.apply {
-                    isFavorite = true // Set the isFavorite field to true for characters in the favorite list
+                    isFavorite = true
                 }
             }
         }

@@ -7,12 +7,13 @@
     android:layout_height="wrap_content"
     android:background="@drawable/round_corners">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/titleIcon"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_gravity="center"
-        android:src="@drawable/morty_smith"
+        tools:src="@drawable/morty_smith"
+        style="@style/roundedCorners2x"
         app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/toast_text"

@@ -6,7 +6,6 @@ import com.example.rickandmorty.di.ApiResponse
 import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.repositories.IRickAndMortyRepository
 import com.example.rickandmorty.response.EpisodeItem
-import com.example.rickandmorty.response.FavoriteState
 import com.example.rickandmorty.ui.base.BaseViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,8 +28,6 @@ class DetailViewModel @Inject constructor(
     private val toastMessageObserver: MutableLiveData<String> = MutableLiveData()
 
 
-
-
     fun fetchCharacterById(id: Int) {
         viewModelScope.launch {
             repo.getCharacterById(id).collectLatest {
@@ -40,7 +37,8 @@ class DetailViewModel @Inject constructor(
                     }
                     is ApiResponse.Success -> {
                         val character = it.data
-                        val isFavorite = character?.let { id -> repo.isCharacterInFavorites(id.id!!) }
+                        val isFavorite =
+                            character?.let { id -> repo.isCharacterInFavorites(id.id!!) }
                         character?.isFavorite = isFavorite!!
                         detailStateFlow.emit(character)
                         progressStateFlow.value = false
@@ -63,10 +61,9 @@ class DetailViewModel @Inject constructor(
     }
 
 
-
     private val characterEpisodesStateFlow: MutableSharedFlow<List<EpisodeItem>?> =
         MutableSharedFlow()
-    val _characterEpisodesStateFlow : SharedFlow<List<EpisodeItem>?> =
+    val _characterEpisodesStateFlow: SharedFlow<List<EpisodeItem>?> =
         characterEpisodesStateFlow
 
 
@@ -117,7 +114,4 @@ class DetailViewModel @Inject constructor(
             repo.updateFavoriteState(id, isFavorite)
         }
     }
-
-
-
 }

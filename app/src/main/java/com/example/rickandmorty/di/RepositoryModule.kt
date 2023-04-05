@@ -1,6 +1,5 @@
 package com.example.rickandmorty.di
 
-import androidx.lifecycle.ViewModel
 import com.example.rickandmorty.api.RickAndMortyApi
 import com.example.rickandmorty.local.RickAndMortyRoomDatabase
 import com.example.rickandmorty.repositories.IRickAndMortyRepository

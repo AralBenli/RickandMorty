@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.room.Room
 import com.example.rickandmorty.api.RickAndMortyApi
 import com.example.rickandmorty.local.RickAndMortyRoomDatabase
-import com.example.rickandmorty.repositories.RickAndMortyRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,13 +31,10 @@ class ApiModule {
             .build()
     }
 
-    @Module
-    @InstallIn(SingletonComponent::class)
-    object CoroutineScopeModule {
-        @Provides
-        @Singleton
-        fun provideCoroutineScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-        }
-    }
+    @Provides
+    @Singleton
+    fun provideCoroutineScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+}
+
 
 

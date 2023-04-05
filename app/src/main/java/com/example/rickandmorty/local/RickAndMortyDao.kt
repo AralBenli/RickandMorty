@@ -1,7 +1,6 @@
 package com.example.rickandmorty.local
 
 import androidx.room.*
-import androidx.room.OnConflictStrategy.Companion.IGNORE
 import com.example.rickandmorty.response.CharacterItem
 import kotlinx.coroutines.flow.Flow
 
