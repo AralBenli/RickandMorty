@@ -6,33 +6,33 @@
     android:layout_height="match_parent"
 
     tools:context=".ui.pages.episodes.EpisodesFragment">
+
     <TextView
-        android:padding="12dp"
-        android:background="@color/transparent_black"
-        android:textSize="20sp"
-        android:textColor="@color/air_blue"
-        android:textStyle="bold"
         android:id="@+id/episodesStaticTxt"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/transparent_black"
+        android:text="EPISODES"
+        android:padding="15dp"
+        android:textColor="@color/air_blue"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="EPISODES"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/episodeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="80dp"
-        android:layout_marginBottom="80dp"
         android:orientation="vertical"
         android:padding="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="3"
         tools:listitem="@layout/episodes_row_item" />
 

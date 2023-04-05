@@ -1,4 +1,6 @@
 package com.example.rickandmorty.ui.pages.detail.adapter
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +21,9 @@ class DetailEpisodeAdapter : RecyclerView.Adapter<DetailEpisodeAdapter.EpisodeVi
                 episodeNameTxt.text = episodeList.name
                 episodeDateTxt.text = episodeList.airDate
                 episode.text = episodeList.episode
+                val staticTxtEpisode = SpannableString("Click to see characters")
+                staticTxtEpisode.setSpan(UnderlineSpan(), 0 , staticTxtEpisode.length, 0)
+                staticTxt.text = staticTxtEpisode
 
             }
             itemView.setOnClickListener {
@@ -47,6 +52,4 @@ class DetailEpisodeAdapter : RecyclerView.Adapter<DetailEpisodeAdapter.EpisodeVi
         episodeList.addAll(list)
         notifyDataSetChanged()
     }
-
-
 }

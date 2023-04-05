@@ -1,6 +1,7 @@
 package com.example.rickandmorty.ui.pages.search
 
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +20,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private val searchViewModel: SearchViewModel by viewModels()
     private var searchAdapter = SearchAdapter()
     lateinit var text: String
-    private var status: String = "alive"
+    private var status: String = "Alive"
     override fun getViewBinding(): FragmentSearchBinding =
         FragmentSearchBinding.inflate(layoutInflater)
 
@@ -27,7 +28,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         (requireActivity() as MainActivity).bottomNavigation(false)
         (requireActivity() as MainActivity).backNavigation(true)
         (requireActivity() as MainActivity).searchIcon(false)
-        (requireActivity() as MainActivity).actionBar(true)
+        (requireActivity() as MainActivity).settings(false)
 
         binding.searchRecyclerView.adapter = searchAdapter
         detailNavigation()
@@ -40,12 +41,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         lifecycleScope.launchWhenStarted {
             searchViewModel._progressStateFlow.collectLatest { showProgress ->
                 if (showProgress) {
-                    showLoadingProgress()
+                    binding.searchProgressBar.visibility = View.VISIBLE
                 } else {
-                    dismissLoadingProgress()
+                    binding.searchProgressBar.visibility = View.GONE
+
                 }
             }
         }
+
         lifecycleScope.launchWhenStarted {
             searchViewModel._searchStateFlow.collectLatest {
                 it?.let {
@@ -62,33 +65,45 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         searchAdapter.clickCharacter = {
             val bundle = Bundle()
             it.id?.let { it -> bundle.putInt("detailId", it) }
-            findNavController().navigate(R.id.detailFragment, bundle)
+            findNavController().navigate(R.id.searchToDetail, bundle)
         }
     }
 
 
     private fun setSearchView() {
-        binding.searchView.isIconified = false
-        binding.searchView.isFocusable = true
-        binding.searchView.imeOptions = EditorInfo.IME_ACTION_DONE
-        binding.searchView.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(query: String?): Boolean {
-                if (!query.isNullOrEmpty()) {
-                    text = query
-                    statusCheck()
-                    searchViewModel.fetchSearch(text, status)
-                    return true
+        with(binding){
+            searchView.isIconified = false
+            searchView.isFocusable = true
+            searchView.requestFocusFromTouch()
+            searchView.onActionViewExpanded()
+            searchView.imeOptions = EditorInfo.IME_ACTION_DONE
+            searchView.setOnQueryTextListener(object :
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
                 }
-                return false
-            }
+
+                override fun onQueryTextChange(query: String?): Boolean {
+                    if (!query.isNullOrEmpty()) {
+                        query.also { text = it }
+                        statusCheck()
+                        fetchSearch()
+                        return false
+                    }
+                    return false
+                }
+            })
+
+
         }
-        )
+
+
     }
+
+    private fun fetchSearch() {
+        searchViewModel.fetchSearch(text, status)
+    }
+
 
     private fun statusCheck() {
         with(binding) {

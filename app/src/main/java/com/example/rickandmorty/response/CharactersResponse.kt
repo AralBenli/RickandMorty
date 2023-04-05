@@ -1,6 +1,11 @@
 package com.example.rickandmorty.response
 
+import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 
 data class CharactersResponse(
@@ -10,15 +15,17 @@ data class CharactersResponse(
     val results: List<CharacterItem>? = emptyList()
 )
 
+@Parcelize
+@Entity
 data class CharacterItem(
+    @PrimaryKey @field:SerializedName("id")
+    val id: Int? = 0,
     @SerializedName("created")
     val created: String? = "",
     @SerializedName("episode")
     val episode: List<String>? = listOf(),
     @SerializedName("gender")
     val gender: String? = "",
-    @SerializedName("id")
-    val id: Int? = 0,
     @SerializedName("image")
     val image: String? = "",
     @SerializedName("location")
@@ -34,21 +41,38 @@ data class CharacterItem(
     @SerializedName("type")
     val type: String? = "",
     @SerializedName("url")
-    val url: String? = ""
-)
+    val url: String? = "",
+    @SerializedName("isFavorite")
+    var isFavorite: Boolean
+
+) : Parcelable {
+    fun setFavoriteState(favState: Boolean) {
+        this.isFavorite = favState
+    }
+}
+
+@Parcelize
+data class FavoriteState(
+    val characterList: List<CharacterItem> = emptyList(),
+    val isError: Boolean = false
+) : Parcelable
+
+@Parcelize
 
 data class CharLocation(
     @SerializedName("name")
     val name: String? = "",
     @SerializedName("url")
-    val url: String?= ""
-)
+    val url: String? = ""
+) : Parcelable
+
+@Parcelize
 
 data class CharOrigin(
     @SerializedName("name")
     val name: String? = "",
     @SerializedName("url")
     val url: String? = ""
-)
+) : Parcelable
 
 

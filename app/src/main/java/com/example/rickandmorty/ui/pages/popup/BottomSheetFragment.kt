@@ -11,28 +11,33 @@ import android.view.Window
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.R
 import com.example.rickandmorty.constants.Constants
 import com.example.rickandmorty.databinding.FragmentBottomSheetBinding
 import com.example.rickandmorty.ui.pages.popup.adapter.PopUpAdapter
+import com.example.rickandmorty.utils.ZoomRecyclerLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
-class BottomSheetFragment : BottomSheetDialogFragment() {
+open class BottomSheetFragment : BottomSheetDialogFragment() {
 
     lateinit var binding: FragmentBottomSheetBinding
     private lateinit var progressDialog: Dialog
     private val bottomSheetViewModel: BottomSheetViewModel by viewModels()
     private var popUpAdapter = PopUpAdapter()
+    private lateinit var linearLayoutManager: ZoomRecyclerLayout
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentBottomSheetBinding.inflate(layoutInflater)
+        binding.recyclerViewCharacters.adapter = popUpAdapter
         return binding.root
 
     }
@@ -46,7 +51,8 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
         val getId = requireArguments().getInt("id")
         val getSeasonNum = requireArguments().getString("season")
-        binding.recyclerViewCharacters.adapter = popUpAdapter
+        linearLayoutManager  = ZoomRecyclerLayout(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerViewCharacters.layoutManager = linearLayoutManager
 
 
         when (requireArguments().getInt("type")) {
@@ -149,7 +155,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         popUpAdapter.clickCharacter = { clickedItem ->
             val bundle = Bundle()
             clickedItem.id?.let { it -> bundle.putInt("detailId", it) }
-            findNavController().navigate(R.id.detailFragment, bundle)
+            findNavController().navigate(R.id.bottomToDetail, bundle)
         }
     }
 

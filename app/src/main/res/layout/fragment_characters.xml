@@ -25,7 +25,7 @@
             <TextView
                 android:id="@+id/characterStaticTxt"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:padding="15dp"
                 android:text="CHARACTERS"
@@ -34,13 +34,13 @@
                 android:textStyle="bold" />
 
             <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
                 android:id="@+id/icon_list_choice"
-                android:layout_marginEnd="10dp"
-                app:useMaterialThemeColors= "false"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@drawable/main_list_selector"/>
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:button="@drawable/main_list_selector"
+                app:useMaterialThemeColors="false" />
 
         </LinearLayout>
 
@@ -48,7 +48,6 @@
             android:id="@+id/recyclerView_characters"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="80dp"
             android:background="@android:color/transparent"
             android:padding="5dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

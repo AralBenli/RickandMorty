@@ -10,7 +10,7 @@
         <item name="android:windowTranslucentStatus">true</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/dark_gray</item>
-        <item name="colorPrimaryVariant">@color/air_blue</item>
+        <item name="colorPrimaryVariant">@color/gray</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

@@ -3,7 +3,7 @@
         android:right="15dp"
         android:left="15dp">
         <shape>
-            <solid android:color="@color/air_pink" />
+            <solid android:color="@color/air_blue" />
             <corners
                 android:radius="120dp">
             </corners>

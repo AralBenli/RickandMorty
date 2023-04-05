@@ -17,8 +17,15 @@
         android:enabled="true" />
 
     <item
+        android:id="@+id/favorites"
+        android:icon="@drawable/favorite_selector"
+        android:title="@string/favorites"
+        android:enabled="true" />
+
+   <!-- <item
         android:id="@+id/settings"
         android:icon="@drawable/menu_selector"
         android:title="Settings"
-        android:enabled="true" />
+        android:enabled="true" />-->
+
 </menu>

@@ -33,5 +33,12 @@ interface IRickAndMortyRepository {
         status: String
     ): Flow<ApiResponse<CharactersResponse?>>
 
+    fun getAllFavoriteCharacters(): Flow<List<CharacterItem>>
+
+    suspend fun addCharacterToFavoriteList(character: CharacterItem)
+
+    suspend fun deleteCharacterFromMyFavoriteList(character: CharacterItem)
+
+    suspend fun updateCharacters(character : CharacterItem)
 
 }

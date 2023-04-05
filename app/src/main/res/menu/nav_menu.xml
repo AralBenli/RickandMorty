@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-<item android:title="@string/change_theme">
+<item android:title="Menu">
     <menu>
         <group android:checkableBehavior="single">
             <item
-                android:id="@+id/lightTheme"
-                android:icon="@drawable/icon_light"
-                android:title="@string/light_theme" />
+                android:id="@+id/characters"
+                android:icon="@drawable/rick_sanchez"
+                android:title="@string/characters"
+                android:enabled="true" />
             <item
-                android:id="@+id/darkTheme"
-                android:icon="@drawable/icon_dark"
-                android:title="@string/dark_theme" />
+                android:id="@+id/locations"
+                android:icon="@drawable/morty_smith"
+                android:title="@string/locations"
+                android:enabled="true" />
+            <item
+                android:id="@+id/episodes"
+                android:icon="@drawable/summer_smith"
+                android:title="@string/episodes"
+                android:enabled="true" />
+
+            <item
+                android:id="@+id/favorites"
+                android:icon="@drawable/icon_favorite"
+                android:title="@string/favorites"
+                android:enabled="true" />
         </group>
     </menu>
 </item>
 
-    <item android:title="@string/change_language">
+    <item android:title="Settings">
         <menu>
             <group android:checkableBehavior="single">
                 <item
@@ -26,4 +39,23 @@
             </group>
         </menu>
     </item>
+    <item android:title="Change Theme">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/lightMode"
+                    android:icon="@drawable/icon_light"
+                    android:title="Light Mode" />
+                <item
+                    android:id="@+id/darkMode"
+                    android:icon="@drawable/icon_dark"
+                    android:title="Dark Mode" />
+            </group>
+        </menu>
+    </item>
+
+
+
+
+
 </menu>

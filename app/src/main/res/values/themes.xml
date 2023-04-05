@@ -9,6 +9,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDisablePreview">true</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryVariant">@color/air_pink</item>

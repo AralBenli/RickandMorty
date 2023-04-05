@@ -4,9 +4,11 @@ import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.CharacterLinearRowItemBinding
 import com.example.rickandmorty.databinding.CharacterRowItemBinding
 import com.example.rickandmorty.response.CharacterItem
@@ -57,10 +59,10 @@ class CharacterAdapter() :
                         linearStatus.setTextColor(Color.parseColor("#00FF00"))
                     }
                     "Dead" -> {
-                        linearStatus.setTextColor(Color.parseColor("#FF0000"))
+                        linearStatus.setTextColor(Color.parseColor("#F00000"))
                     }
                     "unknown" -> {
-                        linearStatus.setTextColor(Color.parseColor("#D3D3D3"))
+                        linearStatus.setTextColor(Color.parseColor("#000000"))
                     }
                 }
                 linearGender.text = characterList.gender
@@ -78,8 +80,18 @@ class CharacterAdapter() :
         val currentItem = getItem(position)
 
         when (holder) {
-            is CharacterGridViewHolder -> holder.bind(currentItem!!)
-            is CharacterLinearViewHolder -> holder.bind(currentItem!!)
+            is CharacterGridViewHolder -> {
+                holder.bind(currentItem!!)
+
+            }
+            is CharacterLinearViewHolder -> {
+                holder.bind(currentItem!!)
+
+               /* holder.itemView.animation = AnimationUtils.loadAnimation(
+                    holder.itemView.context,
+                    R.anim.up_anim)*/
+
+            }
         }
     }
 

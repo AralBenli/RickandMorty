@@ -6,19 +6,23 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.rickandmorty.api.RickAndMortyApi
 import com.example.rickandmorty.di.ApiResponse
+import com.example.rickandmorty.local.RickAndMortyDao
 import com.example.rickandmorty.response.*
 import com.example.rickandmorty.ui.pages.characters.CharacterPagingSource
 import com.example.rickandmorty.ui.pages.episodes.EpisodePagingSource
 import com.example.rickandmorty.ui.pages.locations.LocationPagingSource
 import com.example.rickandmorty.utils.result
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
+@DelicateCoroutinesApi
 class RickAndMortyRepository @Inject constructor(
-    private val api: RickAndMortyApi
+    private val api: RickAndMortyApi,
+    private val dao: RickAndMortyDao
 ) : IRickAndMortyRepository {
 
     companion object {
@@ -87,6 +91,24 @@ class RickAndMortyRepository @Inject constructor(
         result {
             api.getSearch(text, status)
         }.flowOn(Dispatchers.IO)
+
+    override fun getAllFavoriteCharacters(): Flow<List<CharacterItem>> {
+        return dao.getAllFavoriteCharacters()    }
+
+    override suspend fun addCharacterToFavoriteList(character: CharacterItem) {
+        character.isFavorite = true
+        dao.addFavoriteCharacter(character = character)
+        dao.updateCharacter(character)
+    }
+
+    override suspend fun deleteCharacterFromMyFavoriteList(character: CharacterItem) {
+        character.isFavorite = false
+        dao.deleteFavoriteCharacter(character)
+    }
+
+    override suspend fun updateCharacters(character: CharacterItem) {
+        dao.updateCharacter(character)
+    }
 
 
 }

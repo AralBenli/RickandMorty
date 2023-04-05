@@ -2,11 +2,11 @@ package com.example.rickandmorty.utils
 
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.rickandmorty.response.CharacterItem
 
 object Extensions {
 
@@ -42,4 +42,8 @@ fun Fragment.findNavControllerSafely(): NavController? {
     } else {
         null
     }
+
+
 }
+
+

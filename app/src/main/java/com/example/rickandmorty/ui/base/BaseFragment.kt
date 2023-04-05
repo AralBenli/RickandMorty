@@ -4,10 +4,10 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.example.rickandmorty.R
@@ -28,12 +28,14 @@ abstract class BaseFragment<VB : ViewBinding> :
         savedInstanceState: Bundle?
     ): View? {
         return if (savedInstanceView == null) {
+            onCreateViewBase()
             binding = getViewBinding()
             savedInstanceView = binding.root
             savedInstanceView
         } else {
             savedInstanceView
         }
+
 
     }
 
@@ -45,6 +47,7 @@ abstract class BaseFragment<VB : ViewBinding> :
 
     open fun observer(){}
 
+    open fun onCreateViewBase(){}
 
     fun showLoadingProgress() {
         if (!::progressDialog.isInitialized) {
@@ -61,7 +64,29 @@ abstract class BaseFragment<VB : ViewBinding> :
             progressDialog.dismiss()
         }
     }
+    fun showCustomToast(status : Status, message: String, fragment: Fragment) {
 
+        val layout = fragment.layoutInflater.inflate(R.layout.custom_toast_layout,null)
+
+        val textView = layout.findViewById<TextView>(R.id.toast_text)
+        textView.text = message
+
+        val imageView = layout.findViewById<ImageView>(R.id.titleIcon)
+        when(status){
+            Status.Added -> imageView.setImageResource(R.drawable.jerry_smith)
+            Status.Removed -> imageView.setImageResource(R.drawable.morty_smith)
+        }
+
+        val myToast = Toast(this.context)
+        myToast.duration = Toast.LENGTH_SHORT
+        myToast.setGravity(Gravity.BOTTOM, 0, 200)
+        myToast.view = layout //setting the view of custom toast layout
+        myToast.show()
+
+    } enum class Status {
+        Added,
+        Removed ,
+    }
 }
 
 

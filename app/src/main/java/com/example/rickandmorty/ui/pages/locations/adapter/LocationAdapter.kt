@@ -5,9 +5,11 @@ import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.LocationRowItemBinding
 import com.example.rickandmorty.response.LocationItem
 
@@ -43,6 +45,7 @@ class LocationAdapter : PagingDataAdapter<LocationItem, LocationAdapter.Location
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.bind(currentItem!!)
+
     }
 
     object LocationDiffUtil : DiffUtil.ItemCallback<LocationItem>() {

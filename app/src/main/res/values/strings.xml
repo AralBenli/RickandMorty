@@ -26,4 +26,5 @@
     <string name="change_language">Change Language</string>
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
+    <string name="favorites">Favorites</string>
 </resources>

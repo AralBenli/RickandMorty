@@ -4,9 +4,11 @@ import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.EpisodesRowItemBinding
 import com.example.rickandmorty.response.EpisodeItem
 
@@ -37,8 +39,8 @@ class EpisodeAdapter : PagingDataAdapter<EpisodeItem, EpisodeAdapter.EpisodeView
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodeViewHolder {
         val binding =
             EpisodesRowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
         return EpisodeViewHolder(binding)
+
     }
 
     override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {

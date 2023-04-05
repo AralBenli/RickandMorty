@@ -1,7 +1,10 @@
 package com.example.rickandmorty.ui.pages.splash
 
+import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
+import android.view.View
+import android.view.WindowManager
 import androidx.navigation.fragment.findNavController
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentSplashBinding
@@ -11,10 +14,15 @@ import com.example.rickandmorty.ui.pages.main.MainActivity
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
-    override fun getViewBinding(): FragmentSplashBinding = FragmentSplashBinding.inflate(layoutInflater)
+    override fun getViewBinding(): FragmentSplashBinding =
+        FragmentSplashBinding.inflate(layoutInflater)
 
+    override fun onCreateViewBase() {
+
+    }
 
     override fun initViews() {
+
         (requireActivity() as MainActivity).bottomNavigation(false)
         (requireActivity() as MainActivity).searchIcon(false)
         (requireActivity() as MainActivity).backNavigation(false)
@@ -22,7 +30,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
         splash()
     }
 
-    private fun splash(){
+    private fun splash() {
         Handler(Looper.getMainLooper()).postDelayed({
             view?.post {
                 findNavController().navigate(R.id.toHome)

@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.rickandmorty"
-        minSdk 28
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -77,6 +77,13 @@ dependencies {
     implementation('com.github.bumptech.glide:okhttp3-integration:4.14.2') {
         exclude group: 'glide-parent'
     }
+
+    //Room
+    def roomVersion = "2.5.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 
 
     //Paging

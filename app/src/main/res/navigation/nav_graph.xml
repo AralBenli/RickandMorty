@@ -11,17 +11,29 @@
         android:label="fragment_characters"
         tools:layout="@layout/fragment_characters">
         <action
-            android:id="@+id/toLocation"
-            app:destination="@id/locationFragment" />
+            android:id="@+id/charToSearch"
+            app:destination="@id/searchFragment" />
         <action
-            android:id="@+id/toEpisodes"
-            app:destination="@id/episodesFragment" />
+            android:id="@+id/charToDetail"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.rickandmorty.ui.pages.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/searchToDetail"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
     <fragment
         android:id="@+id/locationFragment"
         android:name="com.example.rickandmorty.ui.pages.locations.LocationFragment"
@@ -37,7 +49,7 @@
         android:label="fragment_episodes"
         tools:layout="@layout/fragment_episodes" >
         <action
-            android:id="@+id/action_episodesFragment_to_bottomSheetFragment"
+            android:id="@+id/episodeToBottom"
             app:destination="@id/bottomSheetFragment" />
     </fragment>
     <fragment
@@ -67,6 +79,18 @@
             android:name="id"
             app:argType="integer"
             android:defaultValue="-1" />
+        <action
+            android:id="@+id/bottomToDetail"
+            app:destination="@id/detailFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.rickandmorty.ui.pages.favorite.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/favToDetail"
+            app:destination="@id/detailFragment" />
+    </fragment>
 
 </navigation>

@@ -1,7 +1,9 @@
 package com.example.rickandmorty.ui.pages.search.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.CharacterRowItemBinding
 import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.utils.Extensions.setImageUrl
@@ -38,6 +40,10 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.CharacterViewHolder>() 
         val currentItem = characterList[position]
         holder.bind(currentItem)
 
+        holder.itemView.animation = AnimationUtils.loadAnimation(
+            holder.itemView.context,
+            R.anim.up_anim
+        )
     }
 
     override fun getItemCount() = characterList.size

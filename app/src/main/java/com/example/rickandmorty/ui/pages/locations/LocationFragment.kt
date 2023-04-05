@@ -3,6 +3,7 @@ package com.example.rickandmorty.ui.pages.locations
 
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.rickandmorty.R
 import com.example.rickandmorty.constants.Constants
@@ -12,6 +13,7 @@ import com.example.rickandmorty.ui.pages.locations.adapter.LocationAdapter
 import com.example.rickandmorty.ui.pages.main.MainActivity
 import com.example.rickandmorty.utils.PagingLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class LocationFragment : BaseFragment<FragmentLocationBinding>() {
@@ -23,26 +25,34 @@ class LocationFragment : BaseFragment<FragmentLocationBinding>() {
     private val locationViewModel: LocationViewModel by viewModels()
     private var locationAdapter = LocationAdapter()
 
+    override fun onCreateViewBase() {
+        locationViewModel.fetchLocations()
+    }
     override fun initViews() {
         (requireActivity() as MainActivity).backNavigation(false)
-        (requireActivity() as MainActivity).bottomNavigation(true)
-        (requireActivity() as MainActivity).actionBar(true)
+        (requireActivity() as MainActivity).bottomNavigation(false)
         (requireActivity() as MainActivity).searchIcon(false)
+        (requireActivity() as MainActivity).settings(true)
 
 
         binding.locationRecyclerView.adapter = locationAdapter.withLoadStateHeaderAndFooter(
             header = PagingLoadStateAdapter(),
             footer = PagingLoadStateAdapter()
         )
-        locationViewModel.fetchLocations()
         navigation()
 
     }
 
     override fun observer() {
-        locationViewModel.locations.observe(viewLifecycleOwner) { pagingData ->
-            locationAdapter.submitData(lifecycle, pagingData)
+        /** Collecting data*/
+        lifecycleScope.launchWhenStarted {
+            locationViewModel._locationStateFlow.collectLatest { pagingData ->
+                locationAdapter.submitData(lifecycle , pagingData)
+
+            }
+
         }
+
     }
 
     private fun navigation() {

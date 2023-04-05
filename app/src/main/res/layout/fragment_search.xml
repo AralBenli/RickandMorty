@@ -6,30 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".ui.pages.search.SearchFragment">
 
-    <TextView
-        android:id="@+id/searchStaticTxt"
+    <LinearLayout
+        android:id="@+id/searchTopRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent_black"
-        android:padding="12dp"
-        android:text="SEARCH IT"
-        android:textColor="@color/air_blue"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/searchStaticTxt"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:text="SEARCH IT"
+            android:textColor="@color/air_blue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/icon_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:button="@drawable/icon_filter"
+            app:useMaterialThemeColors="false" />
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:hint="Search it"
         android:background="@drawable/search_view_background"
         app:searchHintIcon="@null"
         android:outlineAmbientShadowColor="@color/dark_gray"
         app:searchIcon="@null"
-        app:layout_constraintTop_toBottomOf="@id/searchStaticTxt" />
+        app:layout_constraintTop_toBottomOf="@id/searchTopRoot" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/status_group"
@@ -80,7 +99,6 @@
         android:id="@+id/searchRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="80dp"
         android:orientation="vertical"
         android:padding="10dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -90,5 +108,15 @@
         app:layout_constraintTop_toBottomOf="@id/status_group"
         app:spanCount="2"
         tools:listitem="@layout/character_row_item" />
+
+    <ProgressBar
+        android:id="@+id/searchProgressBar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/searchRecyclerView"
+        app:layout_constraintEnd_toEndOf="@+id/searchRecyclerView"
+        app:layout_constraintStart_toStartOf="@+id/searchRecyclerView"
+        app:layout_constraintTop_toTopOf="@+id/searchRecyclerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
