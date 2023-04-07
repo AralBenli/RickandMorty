@@ -10,6 +10,7 @@ Rick And Morty characters in one place, easily accessible through the rickandmor
 ## Used Technologies
 - MVVM Design Pattern
 - Flow
+- Dependency Injection / Hilt
 - Paging Library 3
 - ROOM Database
 - Extensions
