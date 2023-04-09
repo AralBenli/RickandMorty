@@ -27,14 +27,22 @@ GET https://rickandportiapi/episode
 GET https://rickandportiapi/location
 ````
 
-
-
-
 # Screenshots
-Characters |  Episodes | Locations | Favorites
+
+Splash |  Characters Grid | Characters Linear | Menu
 :---:|:---:|:---:|:---:
-![](https://user-images.githubusercontent.com/105877592/230581406-ad610607-8175-49c4-a9c2-a9ff0ac545e1.png)|![](https://user-images.githubusercontent.com/105877592/230582788-657024db-8812-451d-a06c-f3b17b479c09.png)|![](https://user-images.githubusercontent.com/105877592/230583162-a72b23e0-336f-4b34-aeca-238a308f3f55.png)|![](https://user-images.githubusercontent.com/105877592/230582703-0cc00468-e7b7-4803-95b7-9cf73460be78.png)
+![](https://user-images.githubusercontent.com/105877592/230769766-7acedd07-2141-4ede-998f-67351026bd44.png)|![](https://user-images.githubusercontent.com/105877592/230769785-91faaf60-2667-4497-9a52-cfc63a4676ec.png)|![](https://user-images.githubusercontent.com/105877592/230769837-a5de8c4a-56c4-47cf-b5d0-6551ba4e8cf5.png)|![](https://user-images.githubusercontent.com/105877592/230769679-1aa8ba3a-47d6-4c98-b321-54841f2a75b1.png)
+
+ Episodes | Locations | Favorites
+:---:|:---:|:---:
+![](https://user-images.githubusercontent.com/105877592/230770038-6c8f0d90-1e7d-452a-b3a5-83cb9f2e583f.png)|![](https://user-images.githubusercontent.com/105877592/230770041-8f9e10d7-a580-4fd0-8fd1-ea5042465149.png)|![](https://user-images.githubusercontent.com/105877592/230770061-c7d42fe6-15ce-4417-aaef-a22cef74ab4f.png)
 
 Detail |  Bottom Fr | Search 
 :---:|:---:|:---:
-![](https://user-images.githubusercontent.com/105877592/230583689-9ff32974-09db-4dfd-863b-a3930976d9dd.png)|![](https://user-images.githubusercontent.com/105877592/230583743-9d8ac085-28b6-4dfc-b547-4f0b2c2d7613.png)|![](https://user-images.githubusercontent.com/105877592/230591973-02bb00d9-3ecd-4d73-81bd-d156c8f9c0a0.png)
+![](https://user-images.githubusercontent.com/105877592/230770090-6bed3a07-833c-447a-b6aa-34195702a4bb.png)|![](https://user-images.githubusercontent.com/105877592/230770093-678faf93-9ecc-453e-bbcb-bbc9b6666a6b.png)|![](https://user-images.githubusercontent.com/105877592/230770096-b8aabbb2-17ef-4001-8a1e-26a2644a9c10.png)
+
+
+
+
+
+
