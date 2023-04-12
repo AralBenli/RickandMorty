@@ -2,12 +2,17 @@ package com.example.rickandmorty.repositories
 
 import androidx.paging.PagingData
 import com.example.rickandmorty.di.ApiResponse
-import com.example.rickandmorty.response.*
+import com.example.rickandmorty.local.cache_characters.CachedCharacterEntity
+import com.example.rickandmorty.local.favorite.FavoriteEntity
+import com.example.rickandmorty.response.CharacterItem
+import com.example.rickandmorty.response.CharactersResponse
+import com.example.rickandmorty.response.EpisodeItem
+import com.example.rickandmorty.response.LocationItem
 import kotlinx.coroutines.flow.Flow
 
 interface IRickAndMortyRepository {
 
-    fun getCharacters(): Flow<PagingData<CharacterItem>>
+    fun getCharacters(): Flow<PagingData<CachedCharacterEntity>>
 
     fun getEpisodes(): Flow<PagingData<EpisodeItem>>
 
@@ -33,17 +38,19 @@ interface IRickAndMortyRepository {
         status: String
     ): Flow<ApiResponse<CharactersResponse?>>
 
-    fun getAllFavoriteCharacters(): Flow<List<CharacterItem>>
+    fun getAllFavoriteCharacters(): Flow<List<FavoriteEntity>>
 
-    suspend fun addCharacterToFavoriteList(character: CharacterItem)
+    suspend fun addCharacterToFavoriteList(character: FavoriteEntity)
 
-    suspend fun deleteCharacterFromMyFavoriteList(character: CharacterItem)
+    suspend fun deleteCharacterFromMyFavoriteList(character: FavoriteEntity)
 
     suspend fun updateFavoriteState(id: Int, isFavorite: Boolean)
 
-    suspend fun updateCharacter(character: CharacterItem?)
+    suspend fun updateCharacter(character: FavoriteEntity?)
 
     suspend fun isCharacterInFavorites(id: Int): Boolean
+
+    fun getFavoriteCharacters(): Flow<List<FavoriteEntity>>
 
 }
 

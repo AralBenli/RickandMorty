@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.R
 import com.example.rickandmorty.constants.Constants
 import com.example.rickandmorty.databinding.FragmentDetailBinding
+import com.example.rickandmorty.local.favorite.toFavoriteEntity
 import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.ui.base.BaseFragment
 import com.example.rickandmorty.ui.pages.detail.adapter.DetailEpisodeAdapter
@@ -197,10 +198,10 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
                 lifecycleScope.launch {
                     detailViewModel.updateFavoriteState(character.id ?: 0, isChecked)
                     if (isChecked) {
-                        detailViewModel.addCharacterToFavorites(character)
+                        detailViewModel.addCharacterToFavorites(character.toFavoriteEntity())
                         showCustomToast(Status.Added, "Character added to favorites", this@DetailFragment)
                     } else {
-                        detailViewModel.deleteCharacter(character)
+                        detailViewModel.deleteCharacter(character.toFavoriteEntity())
                         showCustomToast(Status.Removed, "Character removed from favorites", this@DetailFragment)
                     }
                 }

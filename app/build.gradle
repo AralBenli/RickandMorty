@@ -55,6 +55,7 @@ dependencies {
     // Swipe refresh layout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01"
     implementation 'androidx.room:room-common:2.5.1'
+    implementation 'androidx.core:core-animation:1.0.0-beta01'
 
     // Navigation
     def nav_version = "2.5.3"
@@ -84,6 +85,7 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
+    implementation "androidx.room:room-paging:$roomVersion"
 
 
     //Paging
@@ -95,7 +97,12 @@ dependencies {
 
     // window Manager
     implementation "androidx.window:window:1.1.0-alpha02"
+    // cache storage
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.3'
 
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxkotlin:3.0.1'
 
 }
 

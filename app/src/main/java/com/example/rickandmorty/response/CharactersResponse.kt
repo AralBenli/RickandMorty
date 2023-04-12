@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.rickandmorty.local.favorite.FavoriteEntity
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -16,7 +17,6 @@ data class CharactersResponse(
 )
 
 @Parcelize
-@Entity
 data class CharacterItem(
     @PrimaryKey @field:SerializedName("id")
     val id: Int? = 0,
@@ -45,11 +45,7 @@ data class CharacterItem(
     @SerializedName("isFavorite")
     var isFavorite: Boolean
 
-) : Parcelable {
-    fun setFavoriteState(favState: Boolean) {
-        this.isFavorite = favState
-    }
-}
+) : Parcelable
 
 @Parcelize
 data class FavoriteState(

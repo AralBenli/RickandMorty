@@ -18,22 +18,30 @@ import com.example.rickandmorty.utils.Extensions.setImageUrl
 class CharacterAdapter() :
     PagingDataAdapter<CharacterItem, RecyclerView.ViewHolder>(CharDiffUtil) {
 
-
+    var viewtype = 1
     var clickCharacter: ((item: CharacterItem) -> Unit)? = null
     private var context: Context? = null
+
+    fun viewType(type: Int) {
+        if (type == 1) {
+            viewtype = 1
+        }
+        if (type == 2) {
+            viewtype = 2
+        }
+    }
 
     companion object {
         private const val GRID_LAYOUT = 1
         private const val LINEARLAYOUT = 2
     }
 
-    var viewtype = 1
 
     inner class CharacterGridViewHolder(private val binding: CharacterRowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(characterList: CharacterItem ) {
+        fun bind(characterList: CharacterItem) {
             with(binding) {
                 charNameTxt.text = characterList.name
                 val url = characterList.image
@@ -120,9 +128,7 @@ class CharacterAdapter() :
     override fun getItemViewType(position: Int): Int {
         return when {
             (viewtype == 1) -> GRID_LAYOUT
-            else -> {
-                LINEARLAYOUT
-            }
+            else -> LINEARLAYOUT
         }
     }
 
@@ -133,7 +139,5 @@ class CharacterAdapter() :
         override fun areContentsTheSame(oldItem: CharacterItem, newItem: CharacterItem) =
             oldItem == newItem
     }
-
-
 }
 

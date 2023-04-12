@@ -3,21 +3,24 @@ package com.example.rickandmorty.api
 import com.example.rickandmorty.response.*
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RickAndMortyApi {
+    @Headers("Cache-Control: max-age=86400")
     @GET("character/")
     suspend fun getCharacters(
         @Query("page") pageIndex: Int? = null
     ): Response<CharactersResponse>
 
+    @Headers("Cache-Control: max-age=86400")
     @GET("location/")
     suspend fun getLocations(
         @Query("page") pageIndex: Int? = null
     ): Response<LocationResponse>
 
-
+    @Headers("Cache-Control: max-age=86400")
     @GET("episode/")
     suspend fun getEpisodes(
         @Query("page") pageIndex: Int? = null

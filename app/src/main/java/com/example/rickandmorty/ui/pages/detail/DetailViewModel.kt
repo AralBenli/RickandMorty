@@ -3,6 +3,7 @@ package com.example.rickandmorty.ui.pages.detail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.rickandmorty.di.ApiResponse
+import com.example.rickandmorty.local.favorite.FavoriteEntity
 import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.repositories.IRickAndMortyRepository
 import com.example.rickandmorty.response.EpisodeItem
@@ -37,8 +38,7 @@ class DetailViewModel @Inject constructor(
                     }
                     is ApiResponse.Success -> {
                         val character = it.data
-                        val isFavorite =
-                            character?.let { id -> repo.isCharacterInFavorites(id.id!!) }
+                        val isFavorite =  character?.let { id -> repo.isCharacterInFavorites(id.id!!) }
                         character?.isFavorite = isFavorite!!
                         detailStateFlow.emit(character)
                         progressStateFlow.value = false
@@ -77,12 +77,9 @@ class DetailViewModel @Inject constructor(
                     is ApiResponse.Success -> {
                         characterEpisodesStateFlow.emit(it.data)
                         progressStateFlow.value = false
-
                     }
                     is ApiResponse.Failure -> {
-
                         toastMessageObserver.value = "Connection failed."
-
                         progressStateFlow.value = false
 
                     }
@@ -92,7 +89,7 @@ class DetailViewModel @Inject constructor(
     }
 
     var isFavorite = false
-    fun addCharacterToFavorites(character: CharacterItem) {
+    fun addCharacterToFavorites(character: FavoriteEntity) {
         character.isFavorite = true
         viewModelScope.launch {
             viewModelScope.launch {
@@ -101,7 +98,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun deleteCharacter(character: CharacterItem) {
+    fun deleteCharacter(character: FavoriteEntity) {
         character.isFavorite = false
         viewModelScope.launch {
             repo.deleteCharacterFromMyFavoriteList(character)

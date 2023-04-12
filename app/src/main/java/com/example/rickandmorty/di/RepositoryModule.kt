@@ -21,6 +21,6 @@ class RepositoryModule {
         db: RickAndMortyRoomDatabase ,
         scope: CoroutineScope
     ): IRickAndMortyRepository {
-        return RickAndMortyRepository(rickAndMortyApi , db.rickMortyDao , scope)
+        return RickAndMortyRepository(rickAndMortyApi , db, scope)
     }
 }

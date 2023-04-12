@@ -1,14 +1,17 @@
 package com.example.rickandmorty.ui.pages.characters
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.example.rickandmorty.di.ApiResponse
+import com.example.rickandmorty.local.cache_characters.CachedCharacterEntity
 import com.example.rickandmorty.repositories.IRickAndMortyRepository
-import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,18 +21,22 @@ class CharactersViewModel @Inject constructor(
     private val repo: IRickAndMortyRepository,
 ) : BaseViewModel() {
 
+    private val characterStateFlow: MutableSharedFlow<PagingData<CachedCharacterEntity>> = MutableSharedFlow()
+    val _characterStateFlow: SharedFlow<PagingData<CachedCharacterEntity>> = characterStateFlow
 
-    private val characterStateFlow: MutableSharedFlow<PagingData<CharacterItem>> = MutableSharedFlow()
-    val _characterStateFlow: SharedFlow<PagingData<CharacterItem>> = characterStateFlow
-
+    init {
+        Log.d("CharactersViewModel", "ViewModel initialized")
+    }
     fun fetchCharacters() {
         viewModelScope.launch {
-            repo.getCharacters().flowOn(Dispatchers.IO).collect {
+            repo.getCharacters().flowOn(Dispatchers.IO).collectLatest {
                 characterStateFlow.emit(it)
             }
         }
     }
 }
+
+
 
 
 

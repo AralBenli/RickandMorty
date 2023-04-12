@@ -64,7 +64,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private fun detailNavigation() {
         searchAdapter.clickCharacter = {
             val bundle = Bundle()
-            it.id?.let { it -> bundle.putInt("detailId", it) }
+            it.id?.let { id -> bundle.putInt("detailId", id) }
             findNavController().navigate(R.id.searchToDetail, bundle)
         }
     }
@@ -111,16 +111,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 if (statusAlive.isChecked) {
                     status = "alive"
                     searchView.clearFocus()
+                    searchRecyclerView.layoutManager?.scrollToPosition(0)
                     searchViewModel.fetchSearch(text, status)
                 }
                 if (statusDead.isChecked) {
                     status = "dead"
                     searchView.clearFocus()
+                    searchRecyclerView.layoutManager?.scrollToPosition(0)
                     searchViewModel.fetchSearch(text, status)
                 }
                 if (statusUnknown.isChecked) {
                     status = "unknown"
                     searchView.clearFocus()
+                    searchRecyclerView.layoutManager?.scrollToPosition(0)
                     searchViewModel.fetchSearch(text, status)
                 }
             }

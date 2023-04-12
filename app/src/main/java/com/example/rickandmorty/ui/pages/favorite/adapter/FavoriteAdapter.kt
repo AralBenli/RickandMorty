@@ -17,12 +17,22 @@ class FavoriteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val episodeList: ArrayList<CharacterItem> = arrayListOf()
     var clickEpisode: ((item: CharacterItem) -> Unit)? = null
     private var context: Context? = null
+    var viewtype = 1
 
+    fun viewType(type: Int) {
+        if (type == 1) {
+            viewtype = 1
+        }
+        if (type == 2) {
+            viewtype = 2
+        }
+    }
     companion object {
         private const val GRID_LAYOUT = 1
         private const val LINEARLAYOUT = 2
     }
-    var viewtype = 1
+
+
     inner class FavoriteViewHolder(private val binding: CharacterRowItemBinding) :
         RecyclerView.ViewHolder(binding.root){
         fun bind(favoriteList: CharacterItem) {

@@ -2,7 +2,7 @@ package com.example.rickandmorty.ui.pages.favorite
 
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -13,13 +13,12 @@ import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentFavoriteBinding
 import com.example.rickandmorty.response.CharacterItem
 import com.example.rickandmorty.ui.base.BaseFragment
-import com.example.rickandmorty.ui.pages.characters.adapter.CharacterAdapter
 import com.example.rickandmorty.ui.pages.favorite.adapter.FavoriteAdapter
 import com.example.rickandmorty.ui.pages.main.MainActivity
 import com.example.rickandmorty.utils.CalculateWindowSize
-import com.example.rickandmorty.utils.PagingLoadStateAdapter
-import com.example.rickandmorty.utils.SharedPreferencesManager
 import com.example.rickandmorty.utils.WindowSizeClass
+import com.example.rickandmorty.utils.mapFavoriteToCharacterItem
+import com.example.rickandmorty.utils.runLayoutAnimation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -34,7 +33,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var widthWindowClass: WindowSizeClass
-    lateinit var data : List<CharacterItem>
+    lateinit var data: List<CharacterItem>
     override fun onCreateViewBase() {
     }
 
@@ -47,13 +46,15 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>() {
         widthWindowClass = CalculateWindowSize(requireActivity()).calculateCurrentWidthSize()
         detailNavigation()
         selectList()
+        swipeRefresh()
         binding.recyclerViewFavorite.adapter = favoriteAdapter
     }
 
     override fun observer() {
         lifecycleScope.launch {
-            favoriteViewModel.fetchFavoriteCharacters().collectLatest{ data ->
-                favoriteAdapter.submitData(data)
+            favoriteViewModel.fetchFavoriteCharacters().collectLatest { data ->
+                val favoritesList = data.map { mapFavoriteToCharacterItem(it) }
+                favoriteAdapter.submitData(favoritesList)
             }
         }
     }
@@ -76,12 +77,15 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>() {
                 binding.recyclerViewFavorite.addItemDecoration(
                     DividerItemDecoration(
                         requireContext(),
-                        1)
+                        1
+                    )
                 )
                 /** if --- list icon  --- selected it bind adapter for the linear layout manager */
-                linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                linearLayoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 binding.recyclerViewFavorite.layoutManager = linearLayoutManager
-                favoriteAdapter.viewtype = 2
+                runLayoutAnimation(binding.recyclerViewFavorite)
+                favoriteAdapter.viewType(2)
 
             } else {
                 /**GRID LIST*/
@@ -93,14 +97,26 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>() {
                 /** --- default icon ---  it bind adapter for the grid layout manager widthWindowClass
                  * detect the width of screen and picks the right span count */
                 val spanCount = if (widthWindowClass == WindowSizeClass.EXPANDED) 3 else 2
-                gridLayoutManager = GridLayoutManager(requireContext(), spanCount,
+                gridLayoutManager = GridLayoutManager(
+                    requireContext(), spanCount,
                     GridLayoutManager.VERTICAL,
                     false
                 )
                 binding.recyclerViewFavorite.layoutManager = gridLayoutManager
-                favoriteAdapter.viewtype = 1
+                runLayoutAnimation(binding.recyclerViewFavorite)
+                favoriteAdapter.viewType(1)
             }
         }
     }
 
+    private fun swipeRefresh() {
+        binding.favoriteSwipeRefreshLayout.setOnRefreshListener {
+            with(binding) {
+                recyclerViewFavorite.visibility = View.GONE
+                recyclerViewFavorite.visibility = View.VISIBLE
+                favoriteViewModel.fetchFavoriteCharacters()
+                favoriteSwipeRefreshLayout.isRefreshing = false
+            }
+        }
+    }
 }
