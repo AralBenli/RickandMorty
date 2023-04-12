@@ -11,7 +11,9 @@ Rick And Morty characters in one place, easily accessible through the rickandmor
 - MVVM Design Pattern
 - Kotlin Coroutines/Flow
 - Dependency Injection / Hilt
-- Paging Library 3
+- Paging Library 3 / Remote Mediator
+- Offline Caching
+- Swipe refresh
 - ROOM Database
 - Extensions
 - View Binding
