@@ -16,6 +16,7 @@ Rick And Morty characters in one place, easily accessible through the rickandmor
 - Swipe refresh
 - ROOM Database
 - Extensions
+- View Pager
 - View Binding
 - Shared Preferences
 - Retrofit
@@ -30,6 +31,15 @@ GET https://rickandportiapi/location
 ````
 
 # Screenshots
+
+
+
+
+
+Intro |  Intro | Intro 
+:---:|:---:|:---:
+![](https://user-images.githubusercontent.com/105877592/231741434-12ae7919-6ec2-4f9e-b0ad-7a9f9cb4075e.png)|![](https://user-images.githubusercontent.com/105877592/231741479-5b9b0c93-4d90-42bc-a74e-77a345416898.png)|![](https://user-images.githubusercontent.com/105877592/231741527-50ba062f-215e-4776-96dc-5e717832ecf7.png)
+
 
 Splash |  Characters Grid | Characters Linear | Menu
 :---:|:---:|:---:|:---:
