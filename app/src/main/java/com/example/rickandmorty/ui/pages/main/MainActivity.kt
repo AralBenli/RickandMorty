@@ -1,13 +1,10 @@
 package com.example.rickandmorty.ui.pages.main
 
-import android.content.Context
-import android.content.pm.ActivityInfo
-import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.RelativeLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
@@ -57,8 +54,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-
 
 
     fun bottomNavigation(visibility: Boolean) {

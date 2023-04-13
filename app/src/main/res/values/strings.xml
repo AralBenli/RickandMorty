@@ -27,4 +27,7 @@
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
     <string name="favorites">Favorites</string>
+    <string name="next">Next</string>
+    <string name="done">Done</string>
+    <string name="skip">Skip</string>
 </resources>

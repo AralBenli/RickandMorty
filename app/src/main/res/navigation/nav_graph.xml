@@ -69,6 +69,9 @@
         <action
             android:id="@+id/toHome"
             app:destination="@id/charactersFragment" />
+        <action
+            android:id="@+id/toSlider"
+            app:destination="@id/sliderFragment" />
     </fragment>
     <dialog
         android:id="@+id/bottomSheetFragment"
@@ -91,6 +94,15 @@
         <action
             android:id="@+id/favToDetail"
             app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sliderFragment"
+        android:name="com.example.rickandmorty.ui.pages.intro_slider.SliderFragment"
+        android:label="fragment_slider"
+        tools:layout="@layout/fragment_slider" >
+        <action
+            android:id="@+id/sliderToHome"
+            app:destination="@id/charactersFragment" />
     </fragment>
 
 </navigation>

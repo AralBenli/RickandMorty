@@ -13,6 +13,7 @@ import com.example.rickandmorty.local.remote_keys.RemoteKeysDao
 import com.example.rickandmorty.local.remote_keys.RemoteKeysEntity
 import com.example.rickandmorty.utils.ConverterForRoom
 
+
 @Database(
     entities = [
         FavoriteEntity::class,

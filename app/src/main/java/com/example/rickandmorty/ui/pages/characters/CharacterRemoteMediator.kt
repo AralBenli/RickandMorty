@@ -59,7 +59,7 @@ class CharacterRemoteMediator(
             val cachedCharacters = mapToCachedCharacterEntity(characters)
             cacheDao.insertAll(cachedCharacters)
 
-            Log.d("MyRemoteMediator", "cachedCharacters ${cacheDao.insertAll(cachedCharacters)} ")
+            Log.d("MyRemoteMediator", "cachedCharacters ${cacheDao.insertAll(cachedCharacters)} characters stored ")
 
 
             val remoteKeys = sortedCharacters.map {

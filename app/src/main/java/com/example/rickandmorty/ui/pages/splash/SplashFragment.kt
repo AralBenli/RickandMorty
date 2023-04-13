@@ -1,15 +1,13 @@
 package com.example.rickandmorty.ui.pages.splash
 
-import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
-import android.view.View
-import android.view.WindowManager
 import androidx.navigation.fragment.findNavController
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentSplashBinding
 import com.example.rickandmorty.ui.base.BaseFragment
 import com.example.rickandmorty.ui.pages.main.MainActivity
+import com.example.rickandmorty.utils.SharedPreferencesManager
 
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
@@ -33,7 +31,11 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     private fun splash() {
         Handler(Looper.getMainLooper()).postDelayed({
             view?.post {
-                findNavController().navigate(R.id.toHome)
+                if (SharedPreferencesManager.getBoolean(requireContext(), "skipped", false)) {
+                    findNavController().navigate(R.id.toHome)
+                } else {
+                    findNavController().navigate(R.id.toSlider)
+                }
             }
         }, 3000)
     }
