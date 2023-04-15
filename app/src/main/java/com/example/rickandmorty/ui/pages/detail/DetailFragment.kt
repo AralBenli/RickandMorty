@@ -40,6 +40,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         (requireActivity() as MainActivity).searchIcon(false)
         (requireActivity() as MainActivity).settings(false)
         val getId = requireArguments().getInt("detailId")
+        val getItem = requireArguments().getParcelable<CharacterItem>("characterItem")
 
 
 
@@ -56,11 +57,17 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         popUpWindows()
         shareCharacter(getId)
         scrollHelper()
+
+        with(binding) {
+            detailCharImageView.setImageUrl(getItem?.image.toString())
+            detailCharNameTxt.text = getItem?.name
+            detailCharStatusTxt.text = getItem?.status
+            detailCharSpeciesTxt.text = getItem?.species
+            detailCharOriginTxt.text = getItem?.origin?.name
+        }
     }
 
     override fun observer() {
-
-
         lifecycleScope.launchWhenStarted {
             detailViewModel._progressStateFlow.collectLatest { showProgress ->
                 if (showProgress) {
@@ -199,16 +206,23 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
                     detailViewModel.updateFavoriteState(character.id ?: 0, isChecked)
                     if (isChecked) {
                         detailViewModel.addCharacterToFavorites(character.toFavoriteEntity())
-                        showCustomToast(Status.Added, "Character added to favorites", this@DetailFragment)
+                        showCustomToast(
+                            Status.Added,
+                            "Character added to favorites",
+                            this@DetailFragment
+                        )
                     } else {
                         detailViewModel.deleteCharacter(character.toFavoriteEntity())
-                        showCustomToast(Status.Removed, "Character removed from favorites", this@DetailFragment)
+                        showCustomToast(
+                            Status.Removed,
+                            "Character removed from favorites",
+                            this@DetailFragment
+                        )
                     }
                 }
             }
         }
     }
-
 
 
     private fun shareCharacter(charId: Int) {
@@ -222,7 +236,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
             }
         }
     }
-
-    }
+}
 
 
