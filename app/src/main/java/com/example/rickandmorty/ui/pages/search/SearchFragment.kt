@@ -20,7 +20,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private val searchViewModel: SearchViewModel by viewModels()
     private var searchAdapter = SearchAdapter()
     lateinit var text: String
-    private var status: String = "Alive"
+    lateinit var status : String
     override fun getViewBinding(): FragmentSearchBinding =
         FragmentSearchBinding.inflate(layoutInflater)
 
@@ -86,8 +86,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 override fun onQueryTextChange(query: String?): Boolean {
                     if (!query.isNullOrEmpty()) {
                         query.also { text = it }
+                        fetchInitialSearch()
                         statusCheck()
-                        fetchSearch()
                         return false
                     }
                     return false
@@ -100,14 +100,19 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     }
 
-    private fun fetchSearch() {
-        searchViewModel.fetchSearch(text, status)
+    private fun fetchInitialSearch() {
+        searchViewModel.getSearchAll(text)
     }
 
 
     private fun statusCheck() {
         with(binding) {
             statusGroup.setOnCheckedStateChangeListener { _, _ ->
+                if (statusAll.isChecked){
+                    searchView.clearFocus()
+                    searchRecyclerView.layoutManager?.scrollToPosition(0)
+                    searchViewModel.getSearchAll(text)
+                }
                 if (statusAlive.isChecked) {
                     status = "alive"
                     searchView.clearFocus()

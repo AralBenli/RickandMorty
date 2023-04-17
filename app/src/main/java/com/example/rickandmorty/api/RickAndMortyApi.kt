@@ -48,6 +48,11 @@ interface RickAndMortyApi {
         @Query("status") status: String
     ): Response<CharactersResponse>
 
+    @GET("character/")
+    suspend fun getSearchAll(
+        @Query("name") name: String,
+    ): Response<CharactersResponse>
+
     @GET("episode/{episodes}")
     suspend fun getCharacterEpisodes(
         @Path("episodes") episodes: String

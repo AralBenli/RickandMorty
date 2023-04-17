@@ -102,6 +102,11 @@ class RickAndMortyRepository @Inject constructor(
             api.getSearch(text, status)
         }.flowOn(Dispatchers.IO)
 
+    override fun getSearchAll(text: String): Flow<ApiResponse<CharactersResponse?>> =
+        result {
+            api.getSearchAll(text)
+        }
+
     override fun getAllFavoriteCharacters(): Flow<List<FavoriteEntity>> {
         return favoriteDao.getAllFavoriteCharacters()
     }

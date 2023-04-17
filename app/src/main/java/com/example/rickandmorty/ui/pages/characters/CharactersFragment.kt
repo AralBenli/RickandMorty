@@ -14,7 +14,10 @@ import com.example.rickandmorty.databinding.FragmentCharactersBinding
 import com.example.rickandmorty.ui.base.BaseFragment
 import com.example.rickandmorty.ui.pages.characters.adapter.CharacterAdapter
 import com.example.rickandmorty.ui.pages.main.MainActivity
-import com.example.rickandmorty.utils.*
+import com.example.rickandmorty.utils.CalculateWindowSize
+import com.example.rickandmorty.utils.PagingLoadStateAdapter
+import com.example.rickandmorty.utils.WindowSizeClass
+import com.example.rickandmorty.utils.mapToCharacterItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -113,7 +116,9 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
                 binding.recyclerViewCharacters.layoutManager = linearLayoutManager
                 characterAdapter.viewType(2)
                 characterAdapter.notifyDataSetChanged()
+/*
                 runLayoutAnimation(binding.recyclerViewCharacters)
+*/
 
             } else {
                 /** / Switch to Grid layout**/
@@ -136,7 +141,9 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
                 binding.recyclerViewCharacters.layoutManager = gridLayoutManager
                 characterAdapter.viewType(1)
                 characterAdapter.notifyDataSetChanged()
+/*
                 runLayoutAnimation(binding.recyclerViewCharacters)
+*/
 
             }
         }

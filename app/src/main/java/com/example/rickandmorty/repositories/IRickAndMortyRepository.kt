@@ -38,6 +38,12 @@ interface IRickAndMortyRepository {
         status: String
     ): Flow<ApiResponse<CharactersResponse?>>
 
+    fun getSearchAll(
+        text: String
+    ): Flow<ApiResponse<CharactersResponse?>>
+
+
+
     fun getAllFavoriteCharacters(): Flow<List<FavoriteEntity>>
 
     suspend fun addCharacterToFavoriteList(character: FavoriteEntity)

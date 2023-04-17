@@ -3,8 +3,8 @@ package com.example.rickandmorty.ui.pages.search
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.rickandmorty.di.ApiResponse
-import com.example.rickandmorty.response.CharactersResponse
 import com.example.rickandmorty.repositories.IRickAndMortyRepository
+import com.example.rickandmorty.response.CharactersResponse
 import com.example.rickandmorty.ui.base.BaseViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,6 +31,36 @@ class SearchViewModel @Inject constructor(
     fun fetchSearch(text: String ,status:String) {
         viewModelScope.launch {
             repo.getSearch(text , status).collectLatest {
+                when (it) {
+                    is ApiResponse.Progress -> {
+                        progressStateFlow.value = true
+                    }
+                    is ApiResponse.Success -> {
+                        searchStateFlow.emit(it.data)
+                        progressStateFlow.value = false
+
+                    }
+                    is ApiResponse.Failure -> {
+                        try {
+                            val errorResponse = Gson().fromJson(
+                                it.data!!.errorBody()!!.string(),
+                                CharactersResponse::class.java
+                            )
+                            searchStateFlow.emit(errorResponse)
+                        } catch (e: Exception) {
+                            toastMessageObserver.setValue("Connection failed.")
+                        }
+                        progressStateFlow.value = false
+
+                    }
+                }
+            }
+        }
+    }
+
+    fun getSearchAll(text:String){
+        viewModelScope.launch {
+            repo.getSearchAll(text).collectLatest {
                 when (it) {
                     is ApiResponse.Progress -> {
                         progressStateFlow.value = true

@@ -39,6 +39,7 @@ abstract class RickAndMortyRoomDatabase : RoomDatabase() {
                     context.applicationContext,
                     RickAndMortyRoomDatabase::class.java, "RickAndMortyRoomDatabase"
                 )
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance
