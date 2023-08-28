@@ -29,13 +29,13 @@
     </menu>
 </item>
 
-    <item android:title="Settings">
+    <item android:title="Deep Link">
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/changeLanguage"
+                    android:id="@+id/deepLinkButton"
                     android:icon="@drawable/icon_language"
-                    android:title="@string/change_language" />
+                    android:title="@string/deep_link_example" />
             </group>
         </menu>
     </item>

@@ -1,6 +1,8 @@
 package com.example.rickandmorty.utils
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.ImageView
@@ -89,4 +91,16 @@ object Extensions {
 
         )
     }
+fun Context.openDeepLink(appUrlString: String, playStoreUrlString: String) {
+    val appURL = Uri.parse(appUrlString)
+    val playStoreUrl = Uri.parse(playStoreUrlString)
+    val intent = Intent(Intent.ACTION_VIEW, appURL)
+
+    if (intent.resolveActivity(packageManager) != null) {
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // Add the flag here
+        startActivity(intent)
+    } else {
+        startActivity(Intent(Intent.ACTION_VIEW, playStoreUrl))
+    }
+}
 

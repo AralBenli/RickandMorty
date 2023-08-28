@@ -62,7 +62,6 @@ class NetworkModule {
             .readTimeout(60, TimeUnit.SECONDS)
             .build()
 
-
     @Singleton
     @Provides
     @Named("provideRetrofit")

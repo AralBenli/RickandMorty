@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.ActivityMainBinding
 import com.example.rickandmorty.utils.SharedPreferencesManager
+import com.example.rickandmorty.utils.openDeepLink
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -161,8 +162,10 @@ class MainActivity : AppCompatActivity() {
 
 
                 }
-                R.id.changeLanguage -> {
-
+                R.id.deepLinkButton -> {
+                    val deepLinkUrl = "moviedatabase://"
+                    val githubLink = "https://github.com/AralBenli/MovieAPP"
+                    openDeepLink(deepLinkUrl , githubLink)
                 }
                 R.id.darkMode -> {
                     if (binding.themeCheckBox.isChecked) {
@@ -218,9 +221,7 @@ class MainActivity : AppCompatActivity() {
         binding.settings.setOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
-
     }
-
 }
 
 
