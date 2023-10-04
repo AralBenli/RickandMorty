@@ -4,6 +4,7 @@ package com.example.rickandmorty.ui.pages.main
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         )
 
         super.onCreate(savedInstanceState)
+        baseUrl = getBaseUrl()
+        Toast.makeText(this, baseUrl, Toast.LENGTH_SHORT).show()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -165,7 +168,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.deepLinkButton -> {
                     val deepLinkUrl = "moviedatabase://"
                     val githubLink = "https://github.com/AralBenli/MovieAPP"
-                    openDeepLink(deepLinkUrl , githubLink)
+                    openDeepLink(deepLinkUrl, githubLink)
                 }
                 R.id.darkMode -> {
                     if (binding.themeCheckBox.isChecked) {
@@ -220,6 +223,16 @@ class MainActivity : AppCompatActivity() {
     private fun openSettings() {
         binding.settings.setOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
+        }
+    }
+
+    private external fun getBaseUrl(): String
+
+    companion object {
+        var baseUrl : String =""
+
+        init {
+            System.loadLibrary("ndk")
         }
     }
 }
