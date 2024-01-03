@@ -2,6 +2,7 @@ package com.example.rickandmorty.di
 
 
 import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.rickandmorty.constants.Constants.BASE_URL
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -27,6 +28,13 @@ class NetworkModule {
     private val cacheSize = (10 * 1024 * 1024).toLong() // 10 MB cache size
     private val cacheDirName = "retrofit_cache"
 
+
+    @Provides
+    @Singleton
+    fun provideChuckerInterceptor(@ApplicationContext context: Context): ChuckerInterceptor =
+        ChuckerInterceptor.Builder(context).build()
+
+
     @Singleton
     @Provides
     fun provideCacheDir(@ApplicationContext context: Context): File {
@@ -40,6 +48,7 @@ class NetworkModule {
     fun provideCache(cacheDir: File): Cache {
         return Cache(cacheDir, cacheSize)
     }
+
     @Singleton
     @Provides
     fun provideHttpLoggingInterceptor() = HttpLoggingInterceptor().apply {
@@ -48,13 +57,15 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun providesOkHttpClient(
+    fun provideOkHttpClient(
+        cache: Cache,
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        cache: Cache
+        chuckerInterceptor: ChuckerInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
             .cache(cache)
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(chuckerInterceptor)
             .protocols(listOf(Protocol.HTTP_1_1))
             .callTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
@@ -65,12 +76,8 @@ class NetworkModule {
     @Singleton
     @Provides
     @Named("provideRetrofit")
-    fun provideRetrofit(
-        okHttpClient: OkHttpClient
-    ): Retrofit {
-        val gson = GsonBuilder()
-            .setLenient()
-            .create()
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        val gson = GsonBuilder().setLenient().create()
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)

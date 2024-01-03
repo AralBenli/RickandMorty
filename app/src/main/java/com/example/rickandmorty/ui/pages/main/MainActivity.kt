@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.chuckerteam.chucker.api.Chucker
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.ActivityMainBinding
 import com.example.rickandmorty.utils.SharedPreferencesManager
@@ -39,14 +40,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         loadTheme()
         initViews()
         navigation()
         pickTheme()
         openSettings()
     }
+
 
     fun navigation() {
         binding.searchIcon.setOnClickListener {
@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 
     fun bottomNavigation(visibility: Boolean) {
         if (visibility) {
@@ -103,6 +102,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
 
+        //region BOTTOM NAVIGATION REGION
         /** Bottom navigation setup and removing icon's default color */
 
         bottomNavigationView = binding.navigationBottom
@@ -134,8 +134,9 @@ class MainActivity : AppCompatActivity() {
 
             true
         }
+        //endregion
 
-
+        //region DRAWER MENU NAVIGATION
         /** Drawer menu  navigation */
 
         binding.navigation.setNavigationItemSelectedListener { drawerItem ->
@@ -155,8 +156,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.episodes -> {
                     navHostFragment.findNavController().navigate(R.id.episodesFragment)
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
-
-
+                }
+                R.id.chucker -> {
+                    val intent = Chucker.getLaunchIntent(this@MainActivity)
+                    startActivity(intent)
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
                 }
 
                 R.id.favorites -> {
@@ -191,9 +195,10 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
+        //endregion
 
     }
-
+    //region THEME FUNCTIONS REGION
     /** Last selected theme loading when reopening app */
     private fun loadTheme() {
         if (SharedPreferencesManager.getBoolean(applicationContext, "nightMode", true)) {
@@ -219,6 +224,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    //endregion
 
     private fun openSettings() {
         binding.settings.setOnClickListener {
@@ -229,7 +235,7 @@ class MainActivity : AppCompatActivity() {
     private external fun getBaseUrl(): String
 
     companion object {
-        var baseUrl : String =""
+        var baseUrl: String = ""
 
         init {
             System.loadLibrary("ndk")

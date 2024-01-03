@@ -75,7 +75,6 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding>() {
         }
     }
 
-
     private fun detailNavigation() {
         characterAdapter.clickCharacter = {
             val bundle = bundleOf("characterItem" to it, "detailId" to it.id)
